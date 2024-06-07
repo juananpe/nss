@@ -11,12 +11,6 @@ from params import GenomeParams, load_params
 # Bases.
 DNA = 'ACGT'
 
-# Probabilities of single nucleotide variations. The original base
-# from the reference genome is selected 50% of the time; the other
-# bases are shuffled and one selected per individual with the given
-# probabilities.
-SNP_PROBS = (0.70, 0.15, 0.08, 0.07)
-
 
 @dataclass
 class GenePool:
@@ -34,12 +28,7 @@ def main():
     '''Main driver.'''
     options = parse_args()
     random.seed(options.params.seed)
-    genomes = random_genomes(
-        options.params.length,
-        options.params.num_genomes,
-        options.params.num_snp,
-        options.params.prob_other,
-    )
+    genomes = random_genomes(options.params)
     add_susceptibility(genomes)
     save(options.outfile, genomes)
 
@@ -71,34 +60,34 @@ def random_bases(length):
     return ''.join(random.choices(DNA, k=length))
 
 
-def random_genomes(length, num_genomes, num_snp, prob_other):
+def random_genomes(params):
     '''Generate a set of genomes with specified number of point mutations.'''
-    assert 0 <= num_snp <= length
+    assert 0 <= params.num_snp <= params.length
 
     # Reference genomes and specific genomes to modify.
-    reference = random_bases(length)
-    individuals = [reference] * num_genomes
+    reference = random_bases(params.length)
+    individuals = [reference] * params.num_genomes
 
     # Locations for SNPs.
-    locations = random.sample(list(range(length)), num_snp)
+    locations = random.sample(list(range(params.length)), params.num_snp)
 
     # Introduce significant mutations.
     for loc in locations:
         candidates = _other_bases(reference, loc)
         bases = [reference[loc]] + random.sample(candidates, k=len(candidates))
-        individuals = [_mutate_snps(reference, ind, loc, bases) for ind in individuals]
+        individuals = [_mutate_snps(params, reference, ind, loc, bases) for ind in individuals]
 
     # Introduce other random mutations.
-    other_locations = list(set(range(length)) - set(locations))
+    other_locations = list(set(range(params.length)) - set(locations))
     individuals = [
-        _mutate_other(ind, prob_other, other_locations) for ind in individuals
+        _mutate_other(ind, params.prob_other, other_locations) for ind in individuals
     ]
 
     # Return structure.
     individuals.sort()
     locations.sort()
     return GenePool(
-        length=length, reference=reference, individuals=individuals, locations=locations
+        length=params.length, reference=reference, individuals=individuals, locations=locations
     )
 
 
@@ -111,9 +100,9 @@ def save(outfile, genomes):
         print(as_text)
 
 
-def _mutate_snps(reference, genome, loc, bases):
+def _mutate_snps(params, reference, genome, loc, bases):
     '''Introduce single nucleotide polymorphisms at the specified location.'''
-    choice = _choose_one(bases, SNP_PROBS)
+    choice = _choose_one(bases, params.snp_probs)
     return genome[:loc] + choice + genome[loc + 1 :]
 
 

@@ -48,10 +48,11 @@ class AssayParams:
 @dataclass
 class GenomeParams:
     '''Gene sequence parameters.'''
-    length: int = None
-    num_genomes: int = None
-    num_snp: int = None
-    prob_other: float = None
+    snp_probs: list
+    length: int
+    num_genomes: int
+    num_snp: int
+    prob_other: float
     seed: int = None
 
 
@@ -59,7 +60,6 @@ class GenomeParams:
 class GridParams:
     '''Invasion percolation parameters.'''
     depth: int
-    fraction: float
     height: int
     seed: int
     width: int

@@ -25,7 +25,7 @@ data/lab.db: bin/db.py data/assays.json data/samples.csv data/genomes.json
 .PHONY: plates
 plates: data/designs/.touch data/readings/.touch
 
-data/designs/.touch data/readings/.touch: bin/plates.py data/assays.json
+data/designs/.touch data/readings/.touch: bin/plates.py params/assays.json data/assays.json
 	@rm -rf data/designs data/readings
 	@mkdir -p data/designs data/readings
 	python $< \
@@ -45,7 +45,7 @@ data/assays.json: bin/assays.py params/assays.json data/genomes.json data/sample
 	--samples data/samples.csv
 
 ## samples.csv: sampled snails from survey sites
-data/samples.csv: bin/samples.py data/genomes.json params/samples.json data/grids/.touch
+data/samples.csv: bin/samples.py data/genomes.json params/samples.json params/sites.csv data/grids/.touch
 	@mkdir -p data
 	python $< \
 	--genomes data/genomes.json \
@@ -75,7 +75,13 @@ data/grids/.touch: bin/grid.py params/grids.json params/sites.csv
 	--sites params/sites.csv
 	touch data/grids/.touch
 
-## cleandata: remove all datasets
+## lint: check code
+.PHONY: lint
+lint:
+	ruff check .
+
+## clean: remove all datasets
+.PHONY: clean
 clean:
 	@rm -rf data
 	@find . -name '*~' -exec rm {} \;

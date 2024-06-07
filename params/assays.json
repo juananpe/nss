@@ -4,8 +4,8 @@
     "experiments": {
 	"JESS": {
 	    "staff": [1, 1],
-	    "duration": [0, 0],
-	    "plates": [1, 1]
+	    "duration": [0, 1],
+	    "plates": [1, 2]
 	},
 	"ELISA": {
 	    "staff": [1, 2],
