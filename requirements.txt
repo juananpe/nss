@@ -1,3 +1,4 @@
 faker
 geopy
 pandas
+ruff

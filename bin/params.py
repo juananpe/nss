@@ -10,6 +10,7 @@ from typing import List
 DATE_FORMAT = '%Y-%m-%d'
 DEFAULT_START_DATE = datetime.strptime('2023-11-01', DATE_FORMAT)
 DEFAULT_END_DATE = datetime.strptime('2023-11-10', DATE_FORMAT)
+RADIUS = 200.0
 
 
 @dataclass
@@ -55,8 +56,20 @@ class GenomeParams:
 
 
 @dataclass
+class GridParams:
+    '''Invasion percolation parameters.'''
+    depth: int
+    fraction: float
+    height: int
+    seed: int
+    width: int
+
+
+@dataclass
 class SampleParams:
     '''Sampled snail parameters.'''
+    min_snail_size: float = None
+    max_snail_size: float = None
     mutant: float = None
     normal: float = None
     seed: int = None

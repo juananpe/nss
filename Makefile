@@ -10,56 +10,70 @@ commands:
 
 ## datasets: make all datasets
 .PHONY: datasets
-datasets: data/lab.db data/designs/.touch data/readings/.touch
+datasets: data/lab.db data/designs/.touch data/readings/.touch data/grids/.touch
 
-data/lab.db: bin/make_db.py data/assay_data.json data/sample_data.csv data/genome_data.json
+data/lab.db: bin/db.py data/assays.json data/samples.csv data/genomes.json
 	@mkdir -p data
 	python $< \
 	--dbfile $@ \
-	--assays data/assay_data.json \
-	--samples data/sample_data.csv \
-	--sites params/site_params.csv \
-	--surveys params/survey_params.csv
+	--assays data/assays.json \
+	--samples data/samples.csv \
+	--sites params/sites.csv \
+	--surveys params/surveys.csv
 
 ## plates: generate plate files
 .PHONY: plates
 plates: data/designs/.touch data/readings/.touch
 
-data/designs/.touch data/readings/.touch: bin/make_plates.py data/assay_data.json
-	rm -rf data/designs data/readings
+data/designs/.touch data/readings/.touch: bin/plates.py data/assays.json
+	@rm -rf data/designs data/readings
 	@mkdir -p data/designs data/readings
 	python $< \
-	--assays data/assay_data.json \
+	--assays data/assays.json \
 	--designs data/designs \
-	--params params/assay_params.json \
+	--params params/assays.json \
 	--readings data/readings
 	touch data/designs/.touch data/readings/.touch
 
 ## assays: generate assay files
-data/assay_data.json: bin/make_assays.py params/assay_params.json data/genome_data.json data/sample_data.csv
+data/assays.json: bin/assays.py params/assays.json data/genomes.json data/samples.csv
 	@mkdir -p data
 	python $< \
-	--genomes data/genome_data.json \
+	--genomes data/genomes.json \
 	--outfile $@ \
-	--params params/assay_params.json \
-	--samples data/sample_data.csv
+	--params params/assays.json \
+	--samples data/samples.csv
 
-## sample_data.csv: sampled snails from survey sites
-data/sample_data.csv: bin/make_samples.py data/genome_data.json params/sample_params.json params/site_params.csv params/survey_params.csv
+## samples.csv: sampled snails from survey sites
+data/samples.csv: bin/samples.py data/genomes.json params/samples.json data/grids/.touch
 	@mkdir -p data
 	python $< \
-	--genomes data/genome_data.json \
+	--genomes data/genomes.json \
+	--grids data/grids \
 	--outfile $@ \
-	--params params/sample_params.json \
-	--sites params/site_params.csv \
-	--surveys params/survey_params.csv
+	--params params/samples.json \
+	--sites params/sites.csv \
+	--surveys params/surveys.csv
 
-## genome_data.json: synthesized genomes
-data/genome_data.json: bin/make_genomes.py params/genome_params.json
+## genomes.json: synthesized genomes
+data/genomes.json: bin/genomes.py params/genomes.json
 	@mkdir -p data
 	python $< \
 	--outfile $@ \
-	--params params/genome_params.json
+	--params params/genomes.json
+
+## grids: synthesize grids
+.PHONY: grids
+grids: data/grids/.touch
+
+data/grids/.touch: bin/grid.py params/grids.json params/sites.csv
+	@rm -rf data/grids
+	@mkdir -p data/grids
+	python $< \
+	--grids params/grids.json \
+	--outdir data/grids \
+	--sites params/sites.csv
+	touch data/grids/.touch
 
 ## cleandata: remove all datasets
 clean:
