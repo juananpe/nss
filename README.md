@@ -2,6 +2,8 @@
 
 A set of synthetic data generators for teaching data science.
 
+<img src="img/snail-logo.svg" width="200px" alt="snail logo" longtext="snail logo by Vecteezy">
+
 ## Overview
 
 These data generators model genomic analysis of snails in the Pacific Northwest
@@ -15,7 +17,7 @@ The workflow shown in in the diagram below simulates the following:
 -   Each assay plate has a *design* showing the material applied and *readings* showing the measured response.
 -   Plates may be *invalidated* after the fact if a staff member believes it is contaminated.
 
-![workflow][workflow.svg]
+![workflow](img/workflow.svg)
 
 ## Usage
 
@@ -125,4 +127,4 @@ The workflow shown in in the diagram below simulates the following:
 `data/lab.db` is structured as shown below.
 Note that the data from `assays.json` is split between several tables.
 
-![database schema][db-schema.svg]
+![database schema](img/db-schema.svg)
