@@ -27,50 +27,51 @@ The workflow shown in in the diagram below simulates the following:
 4.  View available commands: `make` or `make commands`
 5.  Synthesize datasets: `make datasets`
 
-## Parameters
+## Database
 
-`./params` contains the parameter files used to control data generation.
+The final database `data/lab.db` is structured as shown below.
+Note that the data from `assays.json` is split between several tables.
 
--   Sites: `sites.csv`
-    -   `site_id`: unique label for site (text)
-    -   `lon`: longitude of site reference marker (deg)
-    -   `lat`: latitude of site reference marker (deg)
--   Surveys: `surveys.csv`
-    -   `survey_id`: unique label for survey (text)
-    -   `site_id`: ID of site where survey was conducted (text)
+![database schema](img/db-schema.svg)
+
+-   `site`: survey site
+    -   `site_id`: primary key (text)
+    -   `lon`: longitude of site reference marker (float deg)
+    -   `lat`: latitude of site reference marker (float deg)
+-   `survey`
+    -   `survey_id`: primary key (text)
+    -   `site_id`: foreign key of site where survey was conducted (text)
     -   `date`: date that survey was conducted (date, YYYY-MM-DD)
-    -   `spacing`: spacing of measurement point (float, meters)
--   Genomes: `genomes.json`
-    -   `length`: number of base pairs in sequences (int > 0)
-    -   `num_genomes`: how many individuals to generate (int > 0)
-    -   `num_snp`: number of single nucleotide polymorphisms (int > 0)
-    -   `prob_other`: probability of non-significant mutations (float in 0..1)
-    -   `seed`: RNG seed (int > 0)
-    -   `snp_probs`: probability of selecting various bases (list of 4 float summing to 1.0)
--   Grids: `grids.json`
-    -   `depth`: range of random values per cell (int > 0)
-    -   `height`: number of cells on Y axis (int > 0)
-    -   `seed`: RNG seed (int > 0)
-    -   `width`: number of cells on X axis (int > 0)
--   Assays: `assays.json`
-    -    `assay_duration`: range of days for each assay (ordered pair of int >= 0)
-    -    `assay_plates`: range of plates per assay (ordered pair of int >= 1)
-    -    `assay_staff`: range of staff in each assay (ordered pair of int > 0)
-    -    `assay_types`: types of assays (list of text)
-    -   `control_val`: nominal reading value for control wells (float > 0)
-    -   `controls`: labels to used for control wells (list of text)
-    -   `enddate`: end of all experiments
-    -   `filename_length`: length of stem of design/readings filenames (int > 0)
-    -   `invalid`: probability of plate being invalidted (float in 0..1)
-    -   `locale": locale to use when generating staff names (text)
-    -   `seed`: RNG seed (int > 0)
-    -   `staff`: number of staff (int > 0)
-    -   `startdate`: start of all experiments
-    -   `stdev`: standard deviation on readings (float > 0)
-    -   `treated_val`: nominal reading value for treated well (float > 0)
-    -   `treatment": label to use for treated wells (text)
+-   `sample`: sample taken from survey
+    -   `sample_id`: primary key (int, 1-1 with `experiment.sample_id`)
+    -   `survey_id`: foreign key of survey (int)
+    -   `lon`: longitude of sample site (float deg)
+    -   `lat`: latitude of sample site (float deg)
+    -   `sequence`: genome sequence of sample (text)
+    -   `size`: snail size (float)
+-   `experiment`: experiment done on sample
+    -   `sample_id`: primary key (int, 1-1 with `sample.sample_id`)
+    -   `kind`: kind of experiment (text, either 'ELISA' or 'JESS')
+    -   `start`: start date (date, YYYY-MM-DD)
+    -   `end`: end date (date, YYYY-MM-DD, null if experiment is ongoing)
+-   `staff`
+    -   `staff_id`: primary key (int)
+    -   `personal`: personal name (text)
+    -   `family`: family name (text)
+-   `performed`: join table showing which staff members performed which experiments
+    -   `staff_id`: foreign key of staff member
+    -   `sample_id`: foreign key of sample/experiment
+-   `plate`: information about single assay plate
+    -   `plate_id`: primary key (int)
+    -   `sample_id`: foreign key of sample/experiment (int)
+    -   `date`: date that plate was run (date, YYYY-MM-DD)
+    -   `filename`: filename of design/results file (text)
+-   `invalidated`: invalidated plates
+    -   `plate_id`: foreign key of plate (int)
+    -   `staff_id`: foreign key of staff member who did invalidation (int)
+    -   `date`: when plate was invalidated
 
-## Datasets
+## Data Files
 
 `./data` contains all the generated data.
 
@@ -121,9 +122,45 @@ The workflow shown in in the diagram below simulates the following:
     -   blank line
     -   table with column and row titles showing reading from each well
 
-## Database
+## Parameters
 
-`data/lab.db` is structured as shown below.
-Note that the data from `assays.json` is split between several tables.
+`./params` contains the parameter files used to control data generation.
 
-![database schema](img/db-schema.svg)
+-   Sites: `sites.csv`
+    -   `site_id`: unique label for site (text)
+    -   `lon`: longitude of site reference marker (deg)
+    -   `lat`: latitude of site reference marker (deg)
+-   Surveys: `surveys.csv`
+    -   `survey_id`: unique label for survey (text)
+    -   `site_id`: ID of site where survey was conducted (text)
+    -   `date`: date that survey was conducted (date, YYYY-MM-DD)
+    -   `spacing`: spacing of measurement point (float, meters)
+-   Genomes: `genomes.json`
+    -   `length`: number of base pairs in sequences (int > 0)
+    -   `num_genomes`: how many individuals to generate (int > 0)
+    -   `num_snp`: number of single nucleotide polymorphisms (int > 0)
+    -   `prob_other`: probability of non-significant mutations (float in 0..1)
+    -   `seed`: RNG seed (int > 0)
+    -   `snp_probs`: probability of selecting various bases (list of 4 float summing to 1.0)
+-   Grids: `grids.json`
+    -   `depth`: range of random values per cell (int > 0)
+    -   `height`: number of cells on Y axis (int > 0)
+    -   `seed`: RNG seed (int > 0)
+    -   `width`: number of cells on X axis (int > 0)
+-   Assays: `assays.json`
+    -    `assay_duration`: range of days for each assay (ordered pair of int >= 0)
+    -    `assay_plates`: range of plates per assay (ordered pair of int >= 1)
+    -    `assay_staff`: range of staff in each assay (ordered pair of int > 0)
+    -    `assay_types`: types of assays (list of text)
+    -   `control_val`: nominal reading value for control wells (float > 0)
+    -   `controls`: labels to used for control wells (list of text)
+    -   `enddate`: end of all experiments
+    -   `filename_length`: length of stem of design/readings filenames (int > 0)
+    -   `invalid`: probability of plate being invalidted (float in 0..1)
+    -   `locale": locale to use when generating staff names (text)
+    -   `seed`: RNG seed (int > 0)
+    -   `staff`: number of staff (int > 0)
+    -   `startdate`: start of all experiments
+    -   `stdev`: standard deviation on readings (float > 0)
+    -   `treated_val`: nominal reading value for treated well (float > 0)
+    -   `treatment": label to use for treated wells (text)
