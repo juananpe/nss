@@ -6,4 +6,4 @@ plotly
 polars
 pyarrow
 ruff
-sqlalchemy
+sqlmodel

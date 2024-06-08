@@ -10,6 +10,7 @@ import polars as pl
 import random
 from geopy.distance import lonlat, distance
 from params import SampleParams, load_params
+import sys
 
 
 LON_LAT_PRECISION = 5
