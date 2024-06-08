@@ -17,20 +17,23 @@ RADIUS = 200.0
 class AssayParams:
     '''Parameters for assay data generation.'''
 
-    seed: int = None
-    startdate: date = None
-    enddate: date = None
-    experiments: dict
-    filename_length: int = 8
-    locale: str = 'en_IN'
-    staff: int = 1
-    experiments: int = 1
-    invalid: float = 0.1
-    control: float = 5.0
-    treated: float = 8.0
-    stdev: float = 3.0
-    treatment: str = None
+    assay_types: list
+    assay_staff: list
+    assay_duration: list
+    assay_plates: list
+    control_val: float = 5.0
     controls: List[str] = field(default_factory=list)
+    enddate: date = None
+    experiments: int = 1
+    filename_length: int = 8
+    invalid: float = 0.1
+    locale: str = 'en_IN'
+    seed: int = None
+    staff: int = 1
+    startdate: date = None
+    stdev: float = 3.0
+    treated_val: float = 8.0
+    treatment: str = None
 
     def __post_init__(self):
         '''Convert dates if provided.'''

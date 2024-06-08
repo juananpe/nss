@@ -89,7 +89,7 @@ def make_plate(params, sample_id, kind, design_file, readings_file):
 
 def make_reading(params, treated):
     '''Generate a single plate reading.'''
-    mean = params.treated if treated else params.control
+    mean = params.treated_val if treated else params.control_val
     value = max(0.0, random.gauss(mean, params.stdev))
     return f'{value:.02f}'
 

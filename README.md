@@ -53,23 +53,22 @@ The workflow shown in in the diagram below simulates the following:
     -   `seed`: RNG seed (int > 0)
     -   `width`: number of cells on X axis (int > 0)
 -   Assays: `assays.json`
-    -   `startdate`: start of all experiments
+    -    `assay_duration`: range of days for each assay (ordered pair of int >= 0)
+    -    `assay_plates`: range of plates per assay (ordered pair of int >= 1)
+    -    `assay_staff`: range of staff in each assay (ordered pair of int > 0)
+    -    `assay_types`: types of assays (list of text)
+    -   `control_val`: nominal reading value for control wells (float > 0)
+    -   `controls`: labels to used for control wells (list of text)
     -   `enddate`: end of all experiments
     -   `filename_length`: length of stem of design/readings filenames (int > 0)
-    -   `locale": locale to use when generating staff names (text)
     -   `invalid`: probability of plate being invalidted (float in 0..1)
-    -   `staff`: number of staff (int > 0)
-    -   `control`: nominal reading value for control wells (float > 0)
-    -   `treated`: nominal reading value for treated well (float > 0)
+    -   `locale": locale to use when generating staff names (text)
     -   `seed`: RNG seed (int > 0)
+    -   `staff`: number of staff (int > 0)
+    -   `startdate`: start of all experiments
     -   `stdev`: standard deviation on readings (float > 0)
+    -   `treated_val`: nominal reading value for treated well (float > 0)
     -   `treatment": label to use for treated wells (text)
-    -   `controls`: labels to used for control wells (list of text)
-    -   `experiments`: controls for multiple types of experiments
-        -   key: experiment type (text)
-        -   `staff`: number of staff involved (list of int)
-	-   `duration`: number of days experiment took (int >= 0)
-	-   `plates`: number of plates used in experiment (int > 0)
 
 ## Datasets
 

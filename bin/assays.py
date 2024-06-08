@@ -34,7 +34,7 @@ def main():
 
 def make_experiments(params, fake, individuals):
     '''Create experiments and their data.'''
-    kinds = list(params.experiments.keys())
+    kinds = list(params.assay_types)
     staff_ids = list(range(1, params.staff + 1))
     experiments = []
     performed = []
@@ -50,7 +50,7 @@ def make_experiments(params, fake, individuals):
             {'sample_id': sample_id, 'kind': kind, 'start': round_date(started), 'end': round_date(ended)}
         )
 
-        num_staff = random.randint(*params.experiments[kind]['staff'])
+        num_staff = random.randint(*params.assay_staff)
         performed.extend(
             [{'staff_id': s, 'sample_id': sample_id} for s in random.sample(staff_ids, num_staff)]
         )
@@ -131,7 +131,7 @@ def random_experiment_duration(params, kind):
     '''Choose random start date and end date for experiment.'''
     start = random.uniform(params.startdate.timestamp(), params.enddate.timestamp())
     start = datetime.fromtimestamp(start)
-    duration = timedelta(days=random.randint(*params.experiments[kind]['duration']))
+    duration = timedelta(days=random.randint(*params.assay_duration))
     end = start + duration
     end = None if end > params.enddate else end
     return start, end
@@ -146,7 +146,7 @@ def random_plates(params, kind, sample_id, start_id, start_date, random_filename
             'date': random_date_interval(start_date, params.enddate),
             'filename': next(random_filename),
         }
-        for i in range(random.randint(*params.experiments[kind]['plates']))
+        for i in range(random.randint(*params.assay_plates))
     ]
 
 
