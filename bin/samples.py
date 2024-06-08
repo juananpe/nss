@@ -6,7 +6,7 @@ import json
 import math
 import numpy as np
 from pathlib import Path
-import pandas as pd
+import polars as pl
 import random
 from geopy.distance import lonlat, distance
 from params import SampleParams, load_params
@@ -14,7 +14,7 @@ from params import SampleParams, load_params
 
 LON_LAT_PRECISION = 5
 READING_PRECISION = 1
-SNAIL_PRECISION = 1
+SIZE_PRECISION = 1
 
 
 def main():
@@ -42,10 +42,12 @@ def generate_samples(options, genomes, grids):
         )
         samples.append((i + 1, survey_id, point.longitude, point.latitude, seq, size))
 
-    df = pd.DataFrame(samples, columns=('sample_id', 'survey_id', 'lon', 'lat', 'sequence', 'size'))
-    df['lon'] = df['lon'].round(LON_LAT_PRECISION)
-    df['lat'] = df['lat'].round(LON_LAT_PRECISION)
-    df['size'] = df['size'].round(SNAIL_PRECISION)
+    df = pl.DataFrame(samples, schema=('sample_id', 'survey_id', 'lon', 'lat', 'sequence', 'size'))
+    df = df.with_columns(
+        lon=df['lon'].round(LON_LAT_PRECISION),
+        lat=df['lat'].round(LON_LAT_PRECISION),
+        size=df['size'].round(SIZE_PRECISION),
+    )
 
     return df
 
@@ -70,25 +72,27 @@ def parse_args():
     options = parser.parse_args()
     assert options.params != options.outfile, 'Cannot use same filename for options and parameters'
     options.params = load_params(SampleParams, options.params)
-    options.surveys = pd.read_csv(options.surveys)
-    options.sites = pd.read_csv(options.sites)
+    options.surveys = pl.read_csv(options.surveys)
+    options.sites = pl.read_csv(options.sites)
     return options
 
 
 def random_geo(sites, surveys, grids):
     '''Select random point from one of the sample grids.'''
     survey_row = random.randrange(surveys.shape[0])
-    survey_id = surveys.at[survey_row, 'survey_id']
-    site_id = surveys.at[survey_row, 'site_id']
-    site_row = sites.index[sites['site_id'] == site_id].tolist()[0]
+    survey_id = surveys.item(survey_row, 'survey_id')
+    spacing = float(surveys.item(survey_row, 'spacing'))
+    site_id = surveys.item(survey_row, 'site_id')
+    site_row = sites['site_id'].to_list().index(site_id)
+    site_lon = sites.item(site_row, 'lon')
+    site_lat = sites.item(site_row, 'lat')
 
     grid = grids[site_id]
     width, height = grid.shape
     rand_x, rand_y = random.randrange(width), random.randrange(height)
     contaminated = bool(grid[rand_x, rand_x])
 
-    corner = lonlat(float(sites.at[site_row, 'lon']), float(sites.at[site_row, 'lat']))
-    spacing = float(surveys.at[survey_row, 'spacing'])
+    corner = lonlat(site_lon, site_lat)
     rand_x *= spacing
     rand_y *= spacing
     dist = math.sqrt(rand_x**2 + rand_y**2)
@@ -101,9 +105,9 @@ def random_geo(sites, surveys, grids):
 def save(options, samples):
     '''Save or show results.'''
     if options.outfile:
-        Path(options.outfile).write_text(samples.to_csv(index=False))
+        samples.write_csv(Path(options.outfile))
     else:
-        print(samples.to_csv(index=False))
+        samples.write_csv(sys.stdout)
 
 
 if __name__ == '__main__':

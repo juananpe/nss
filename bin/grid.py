@@ -2,8 +2,8 @@
 
 import argparse
 from params import GridParams, load_params
-import pandas as pd
 from pathlib import Path
+import polars as pl
 import random
 
 
@@ -122,7 +122,7 @@ def main():
     '''Main driver.'''
     options = parse_args()
     random.seed(options.grids.seed)
-    for _, row in options.sites.iterrows():
+    for row in options.sites.iter_rows(named=True):
         grid = Grid(options.grids)
         grid.fill()
         save(options.outdir, row['site_id'], grid)
@@ -136,7 +136,7 @@ def parse_args():
     parser.add_argument('--sites', type=str, required=True, help='site parameter file')
     options = parser.parse_args()
     options.grids = load_params(GridParams, options.grids)
-    options.sites = pd.read_csv(options.sites)
+    options.sites = pl.read_csv(options.sites)
     return options
 
 

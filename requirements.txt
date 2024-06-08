@@ -1,6 +1,8 @@
 faker
 geopy
 kaleido
-pandas
 plotly
+polars
+pyarrow
 ruff
+sqlalchemy

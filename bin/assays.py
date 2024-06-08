@@ -3,8 +3,8 @@
 import argparse
 from datetime import date, datetime, timedelta
 import json
-import pandas as pd
 from pathlib import Path
+import polars as pl
 import random
 import string
 
@@ -73,7 +73,7 @@ def make_experiments(params, fake, individuals):
 def make_individuals(options):
     '''Re-create individual genomic information.'''
     genomes = json.loads(Path(options.genomes).read_text())
-    samples = pd.read_csv(options.samples)
+    samples = pl.read_csv(options.samples)
     susceptible_loc = genomes['susceptible_loc']
     susceptible_base = genomes['susceptible_base']
     return [g[susceptible_loc] == susceptible_base for g in samples['sequence']]

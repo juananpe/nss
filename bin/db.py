@@ -2,39 +2,38 @@
 
 import argparse
 import json
-import pandas as pd
-import sqlite3
+import polars as pl
 
 
 def main():
     '''Main driver.'''
     options = parse_args()
-    con = sqlite3.connect(options.dbfile)
+    url = f'sqlite:///{options.dbfile}'
 
-    csv_to_db(con, 'sample', options.samples)
-    csv_to_db(con, 'site', options.sites)
-    csv_to_db(con, 'survey', options.surveys, 'survey_id', 'site_id', 'date')
+    csv_to_db(url, 'sample', options.samples)
+    csv_to_db(url, 'site', options.sites)
+    csv_to_db(url, 'survey', options.surveys, 'survey_id', 'site_id', 'date')
 
     assays = json.load(open(options.assays, 'r'))
-    json_to_db(con, assays, 'staff')
-    json_to_db(con, assays, 'experiment')
-    json_to_db(con, assays, 'performed')
-    json_to_db(con, assays, 'plate')
-    json_to_db(con, assays, 'invalidated')
+    json_to_db(url, assays, 'staff')
+    json_to_db(url, assays, 'experiment')
+    json_to_db(url, assays, 'performed')
+    json_to_db(url, assays, 'plate')
+    json_to_db(url, assays, 'invalidated')
 
 
-def csv_to_db(con, name, source, *columns):
+def csv_to_db(url, name, source, *columns):
     '''Create table from CSV.'''
-    df = pd.read_csv(source)
+    df = pl.read_csv(source)
     if columns:
         df = df[list(columns)]
-    df.to_sql(name, con, index=False, if_exists='replace')
+    df.write_database(name, url, if_table_exists='replace')
 
 
-def json_to_db(con, data, name):
+def json_to_db(url, data, name):
     '''Create table from JSON.'''
-    df = pd.DataFrame(data[name])
-    df.to_sql(name, con, index=False, if_exists='replace')
+    df = pl.DataFrame(data[name])
+    df.write_database(name, url, if_table_exists='replace')
 
 
 def parse_args():
