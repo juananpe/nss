@@ -60,7 +60,7 @@ data/assays.json: bin/assays.py params/assays.json data/genomes.json data/sample
 	--params params/assays.json \
 	--samples data/samples.csv
 
-## samples: sampled snails from survey sites
+## samples: sample snails from survey sites
 .PHONY: samples
 samples: data/samples.csv
 
@@ -74,7 +74,7 @@ data/samples.csv: bin/samples.py data/genomes.json params/samples.json params/si
 	--sites params/sites.csv \
 	--surveys params/surveys.csv
 
-## genomes: synthesized genomes
+## genomes: synthesize genomes
 .PHONY: genomes
 genomes: data/genomes.json
 
@@ -84,7 +84,7 @@ data/genomes.json: bin/genomes.py params/genomes.json
 	--outfile $@ \
 	--params params/genomes.json
 
-## grids: synthesize grids
+## grids: synthesize pollution grids
 .PHONY: grids
 grids: data/grids/.touch
 

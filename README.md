@@ -8,7 +8,6 @@ A set of synthetic data generators for teaching data science.
 
 These data generators model genomic analysis of snails in the Pacific Northwest
 that are growing to unusual size as a result of exposure to pollution.
-The workflow shown in in the diagram below simulates the following:
 
 -   One or more *surveys* are conducted at one or more *sites*.
 -   Each survey collects *genomes* and *sizes* of snails.
@@ -16,8 +15,6 @@ The workflow shown in in the diagram below simulates the following:
 -   *Laboratory staff* perform *assays* of the snails' genetic material.
 -   Each assay plate has a *design* showing the material applied and *readings* showing the measured response.
 -   Plates may be *invalidated* after the fact if a staff member believes it is contaminated.
-
-![workflow](img/workflow.svg)
 
 ## Usage
 
@@ -121,6 +118,25 @@ Note that the data from `assays.json` is split between several tables.
     -   header: machine type, file type ("design" or "readings"), staff ID
     -   blank line
     -   table with column and row titles showing reading from each well
+
+## Workflow
+
+The workflow used to generate the database and data files is shown below.
+Each step can be run from the Makefile:
+
+-   `commands`: show available commands
+-   `datasets`: make all datasets
+-   `map`: generate SVG map of sample locations (in progress)
+-   `db`: generate database
+-   `plates`: generate plate files
+-   `assays`: generate assay files
+-   `samples`: sample snails from survey sites
+-   `genomes`: synthesize genomes
+-   `grids`: synthesize pollution grids
+-   `lint`: check code
+-   `clean`: remove all datasets
+
+![workflow](img/workflow.svg)
 
 ## Parameters
 
