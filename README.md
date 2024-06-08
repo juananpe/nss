@@ -91,33 +91,34 @@ Note that the data from `assays.json` is split between several tables.
 -   Assays: `assays.json`
     -   `staff`:
         -   `staff_id`: unique staff member identifier (int > 0)
-	-   `personal`: personal name (text)
-	-   `family`: family name (text)
+        -   `personal`: personal name (text)
+        -   `family`: family name (text)
     -   `experiment`: experiment details
         -   `sample_id`: sample that experiment used (int > 0)
-	-   `kind`: "ELISA" or "JESS" (text)
-	-   `start`: start date (date, YYYY-MM-DD)
-	-   `end`: end date (date, YYYY-MM-DD or None if experiment incomplete)
+        -   `kind`: "ELISA" or "JESS" (text)
+        -   `start`: start date (date, YYYY-MM-DD)
+        -   `end`: end date (date, YYYY-MM-DD or None if experiment incomplete)
     -   `performed`: join table showing who performed which experiments
         -   `staff_id`: foreign key to `staff`
-	-   `sample_id`: foreign key to `experiment`
+        -   `sample_id`: foreign key to `experiment`
     -   `plate`: details of assay plates used in experiments
         -   `plate_id`: unique plate identifier (int > 0)
-	-   `sample_id`: foreign key to `sample` (text)
-	-   `date`: date plate was run (date, YYYY-MM-DD)
-	-   `filename`: name of design and results files (text)
+        -   `sample_id`: foreign key to `sample` (text)
+        -   `date`: date plate was run (date, YYYY-MM-DD)
+        -   `filename`: name of design and results files (text)
     -   `invalidated`: which plates have been invalidated
         -   `plate_id`: foreign key to plate (text)
-	-   `staff_id`: foreign key to staff member responsible (text)
-	-   `date`: invalidation date (date, YYYY-MM-DD)
--   `designs/*.csv`: assay plate designs
-    -   header: machine type, file type ("design" or "readings"), staff ID
-    -   blank line
-    -   table with column and row titles showing material in each well
--   `readings/*.csv`: assay plate readings
-    -   header: machine type, file type ("design" or "readings"), staff ID
-    -   blank line
-    -   table with column and row titles showing reading from each well
+        -   `staff_id`: foreign key to staff member responsible (text)
+        -   `date`: invalidation date (date, YYYY-MM-DD)
+-   Plates are represented by matching files in the `designs` and `readings` directories
+    -   `designs/*.csv`: assay plate designs
+        -   header: machine type, file type ("design" or "readings"), staff ID
+        -   blank line
+        -   table with column and row titles showing material in each well
+    -   `readings/*.csv`: assay plate readings
+        -   header: machine type, file type ("design" or "readings"), staff ID
+        -   blank line
+        -   table with column and row titles showing reading from each well
 
 ## Workflow
 
