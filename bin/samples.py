@@ -92,8 +92,8 @@ def random_geo(sites, surveys, grids):
     rand_x *= spacing
     rand_y *= spacing
     dist = math.sqrt(rand_x**2 + rand_y**2)
-    bearing = math.atan2(rand_y, rand_x)
-    point = distance(kilometers=dist).destination(corner, bearing=bearing)
+    bearing = math.degrees(math.atan2(rand_y, rand_x))
+    point = distance(meters=dist).destination(corner, bearing=bearing)
 
     return survey_id, point, contaminated
 

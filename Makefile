@@ -10,7 +10,20 @@ commands:
 
 ## datasets: make all datasets
 .PHONY: datasets
-datasets: data/lab.db data/designs/.touch data/readings/.touch data/grids/.touch
+datasets: data/lab.db data/designs/.touch data/readings/.touch data/grids/.touch data/map.svg
+
+## map: generate map
+.PHONY: map
+map: data/map.svg
+
+data/map.svg: bin/map.py data/samples.csv
+	python $< \
+	--outfile $@ \
+	--samples data/samples.csv
+
+## db: generate database
+.PHONY: db
+db: data/lab.db
 
 data/lab.db: bin/db.py data/assays.json data/samples.csv data/genomes.json
 	@mkdir -p data
@@ -36,6 +49,9 @@ data/designs/.touch data/readings/.touch: bin/plates.py params/assays.json data/
 	touch data/designs/.touch data/readings/.touch
 
 ## assays: generate assay files
+.PHONY: assays
+assays: data/assays.json
+
 data/assays.json: bin/assays.py params/assays.json data/genomes.json data/samples.csv
 	@mkdir -p data
 	python $< \
@@ -44,8 +60,11 @@ data/assays.json: bin/assays.py params/assays.json data/genomes.json data/sample
 	--params params/assays.json \
 	--samples data/samples.csv
 
-## samples.csv: sampled snails from survey sites
-data/samples.csv: bin/samples.py data/genomes.json params/samples.json params/sites.csv data/grids/.touch
+## samples: sampled snails from survey sites
+.PHONY: samples
+samples: data/samples.csv
+
+data/samples.csv: bin/samples.py data/genomes.json params/samples.json params/sites.csv params/surveys.csv data/grids/.touch
 	@mkdir -p data
 	python $< \
 	--genomes data/genomes.json \
@@ -55,7 +74,10 @@ data/samples.csv: bin/samples.py data/genomes.json params/samples.json params/si
 	--sites params/sites.csv \
 	--surveys params/surveys.csv
 
-## genomes.json: synthesized genomes
+## genomes: synthesized genomes
+.PHONY: genomes
+genomes: data/genomes.json
+
 data/genomes.json: bin/genomes.py params/genomes.json
 	@mkdir -p data
 	python $< \
