@@ -82,7 +82,7 @@ def make_individuals(options):
 def make_staff(params, fake):
     '''Create people.'''
     return [
-        {'staff_id': i, 'personal': fake.first_name(), 'family': fake.last_name()}
+        {'staff_id': i+1, 'personal': fake.first_name(), 'family': fake.last_name()}
         for i in range(params.staff)
     ]
 
