@@ -16,6 +16,8 @@ that are growing to unusual size as a result of exposure to pollution.
 -   Each assay plate has a *design* showing the material applied and *readings* showing the measured response.
 -   Plates may be *invalidated* after the fact if a staff member believes it is contaminated.
 
+![sample sites](img/map.png)
+
 ## Usage
 
 1.  Create a fresh Python environment: `mamba create -y -n snailz python=3.12`

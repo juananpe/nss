@@ -10,13 +10,13 @@ commands:
 
 ## datasets: make all datasets
 .PHONY: datasets
-datasets: data/lab.db data/designs/.touch data/readings/.touch data/grids/.touch data/map.svg
+datasets: data/lab.db data/designs/.touch data/readings/.touch data/grids/.touch data/map.png
 
 ## map: generate map
 .PHONY: map
-map: data/map.svg
+map: data/map.png
 
-data/map.svg: bin/map.py data/samples.csv
+data/map.png: bin/map.py data/samples.csv
 	python $< \
 	--outfile $@ \
 	--samples data/samples.csv
