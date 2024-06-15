@@ -144,7 +144,10 @@ def require(cond, msg):
 
 def require_file(node, filename, kind):
     """Require that a file exists."""
-    filepath = Path(Path(node.filepath).parent, filename)
+    if filename.startswith("@root/"):
+        filepath = Path(filename.replace("@root", f"{ark.site.home()}/res/"))
+    else:
+        filepath = Path(Path(node.filepath).parent, filename)
     require(filepath.exists(), f"Missing {kind} file {filename} from {node.path}")
 
 

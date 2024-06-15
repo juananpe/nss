@@ -49,12 +49,21 @@ def figure_def(pargs, kwargs, node):
 
     if util.is_index_file(node):
         label = f"{util.kind('figure')}&nbsp;{known[slug]['slug']}: "
-        relpath = "."
     elif util.is_slide_file(node):
         label = ""
-        relpath = ".."
     else:
         util.fail(f"Unknown node type for figure {node}")
-    body = f'<img src="{relpath}/{img}" alt="{alt}"{scale}/>'
+
+    if img.startswith("@root/"):
+        relpath = ""
+    elif util.is_index_file(node):
+        relpath = "./"
+    elif util.is_slide_file(node):
+        relpath = "../"
+    else:
+        util.fail(f"Unknown node type for figure {node}")
+
+
+    body = f'<img src="{relpath}{img}" alt="{alt}"{scale}/>'
     caption = f'<figcaption>{label}{caption}</figcaption>'
     return f'<figure id="{slug}"{cls}>\n{body}\n{caption}\n</figure>'
