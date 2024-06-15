@@ -1,7 +1,7 @@
 # Tutorial information
-slug = "hsp"
-title = "Human-Scale Programming"
-subtitle = "an introduction for the reluctant and weary"
+slug = "snailz"
+title = "Human-Scale Software Development"
+subtitle = "an introduction for the cautious and weary"
 repo = f"https://github.com/gvwilson/{slug}"
 author = {
     "name": "Greg Wilson",
@@ -11,7 +11,7 @@ author = {
 lang = "en"
 highlight = "tango.css"
 plausible = "third-bit.com"
-archive = f"{slug}-examples.zip"
+# archive = f"{slug}-examples.zip"
 # isbn = ""
 # hardcopy = ""
 # cover = f"{slug}-cover.png"
