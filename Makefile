@@ -1,12 +1,4 @@
-# By default, show available commands (by finding '##' comments)
-.DEFAULT: commands
-
-## commands: show available commands
-.PHONY: commands
-commands:
-	@grep -h -E '^##' ${MAKEFILE_LIST} \
-	| sed -e 's/## //g' \
-	| column -t -s ':'
+include lib/mccole/mccole.mk
 
 ## datasets: make all datasets
 .PHONY: datasets
@@ -97,15 +89,6 @@ data/grids/.touch: bin/grid.py params/grids.json params/sites.csv
 	--sites params/sites.csv
 	touch data/grids/.touch
 
-## lint: check code
-.PHONY: lint
-lint:
-	ruff check .
-
-## clean: remove all datasets
-.PHONY: clean
-clean:
+.PHONY: _clean
+_clean:
 	@rm -rf data
-	@find . -name '*~' -exec rm {} \;
-	@find . -type d -name __pycache__ | xargs rm -r
-	@find . -type d -name .pytest_cache | xargs rm -r
