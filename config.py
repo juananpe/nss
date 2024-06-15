@@ -37,6 +37,7 @@ appendices = [
 
 # Files to copy verbatim.
 copy = [
+    "*.geojson",
     "*.jpg",
     "*.js",
     "*.json",
