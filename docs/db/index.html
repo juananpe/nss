@@ -6,7 +6,7 @@
 <link rel="icon" href="../logo.svg">
 <link rel="stylesheet" href="../tango.css" type="text/css">
 <link rel="stylesheet" href="../mccole.css" type="text/css">
-<title>Human-Scale Software Development &middot; Conclusion</title>
+<title>Human-Scale Software Development &middot; The Database</title>
 <script>
   MathJax = {
     tex: {
@@ -50,7 +50,7 @@
 	  <div class="row notex">
   <div class="col-12 center">
     
-      <h1>Conclusion</h1>
+      <h1>The Database</h1>
     
   </div>
 </div>
@@ -58,13 +58,13 @@
 	  
 <nav class="row-always notex">
   <div class="col-1 left">
-    <a href="../db/" title="previous" class="undecorated">&#8678;</a>
+    <a href="../intro/" title="previous" class="undecorated">&#8678;</a>
   </div>
   <div class="col-10 center">
     <a href="../" title="home" class="undecorated">&#9737;</a>
   </div>
   <div class="col-1 right">
-    <a href="../bib/" title="next" class="undecorated">&#8680;</a>
+    <a href="../finale/" title="next" class="undecorated">&#8680;</a>
   </div>
 </nav>
 
@@ -73,7 +73,51 @@
 <li>FIXME</li>
 </ul>
 	  
-	  <p class="fixme">FIXME: write conclusion</p>
+	  <p class="fixme">FIXME: write database chapter</p>
+
+<ul>
+<li>Start with a simple model<ul>
+<li><em>Staff</em> (people) conduct <em>experiments</em> alone or together over one or more days</li>
+<li>Each <em>experiment</em> uses one or more <em>plates</em> on a particular date</li>
+<li>A <em>plate</em> may be <em>invalidated</em> by a single <em>staff</em> on a particular date</li>
+</ul>
+</li>
+<li>Relationships are as important as tables<ul>
+<li>staff to experiment: many to many</li>
+<li>experiment to plate: one to many</li>
+<li>invalidated to plate: zero or one to one</li>
+</ul>
+</li>
+<li>Every model is a lie<ul>
+<li>Is someone who helped review a plate listed as an experimenter?</li>
+<li>We aren&rsquo;t listing a reason for invalidating a plate</li>
+<li>We create models to represent the world, but then those models shape our view of the world</li>
+</ul>
+</li>
+<li>We can use an ORM to translate classes to tables and rows to objects<ul>
+<li>SQLModel is a good one, but getting the plumbing right is hard</li>
+<li>Not least because the error messages are difficult to understand</li>
+</ul>
+</li>
+<li>Take a human-scale approach instead<ul>
+<li>Each query is stored in its own <code>.sql</code> file (which allows us to run it directly for interactive testing)</li>
+<li>Load all of those queries into a dict at the start of the program</li>
+<li>Use a row factory to turn query result rows into dicts</li>
+<li>Figure out inserts and deletes later</li>
+</ul>
+</li>
+<li>We are doing this backward<ul>
+<li>Should figure out what the interface needs to display and <em>then</em> come up with queries</li>
+<li>But we can build a few simple things to test our approach in minutes</li>
+</ul>
+</li>
+<li>How do we test this?<ul>
+<li>Our synthesized dataset is too big to be easily understood, and might change</li>
+<li>Create a smaller fixture as an in-memory database</li>
+</ul>
+</li>
+<li>That was a good hour, wasn&rsquo;t it?</li>
+</ul>
 	</main>
 	<footer>
   © 2024 <a href="https://third-bit.com/">Greg Wilson</a>

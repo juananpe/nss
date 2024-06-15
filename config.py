@@ -20,6 +20,7 @@ timing = False
 # Chapters.
 chapters = [
     "intro",
+    "db",
     "finale",
 ]
 
