@@ -6,7 +6,7 @@
 <link rel="icon" href="../logo.svg">
 <link rel="stylesheet" href="../tango.css" type="text/css">
 <link rel="stylesheet" href="../mccole.css" type="text/css">
-<title>Human-Scale Software Development &middot; The Database</title>
+<title>Human-Scale Software Development &middot; Permissions</title>
 <script>
   MathJax = {
     tex: {
@@ -50,7 +50,7 @@
 	  <div class="row notex">
   <div class="col-12 center">
     
-      <h1>The Database</h1>
+      <h1>Permissions</h1>
     
   </div>
 </div>
@@ -58,13 +58,13 @@
 	  
 <nav class="row-always notex">
   <div class="col-1 left">
-    <a href="../intro/" title="previous" class="undecorated">&#8678;</a>
+    <a href="../db/" title="previous" class="undecorated">&#8678;</a>
   </div>
   <div class="col-10 center">
     <a href="../" title="home" class="undecorated">&#9737;</a>
   </div>
   <div class="col-1 right">
-    <a href="../perm/" title="next" class="undecorated">&#8680;</a>
+    <a href="../finale/" title="next" class="undecorated">&#8680;</a>
   </div>
 </nav>
 
@@ -73,47 +73,42 @@
 <li>FIXME</li>
 </ul>
 	  
-	  <p class="fixme">FIXME: write database chapter</p>
+	  <p class="fixme">FIXME: write permissions chapter</p>
 
 <ul>
-<li>Start with a simple model<ul>
-<li><em>Staff</em> (people) conduct <em>experiments</em> alone or together over one or more days</li>
-<li>Each <em>experiment</em> uses one or more <em>plates</em> on a particular date</li>
-<li>A <em>plate</em> may be <em>invalidated</em> by a single <em>staff</em> on a particular date</li>
+<li>Everyone can read everything in <a href="../db/">Chapter&nbsp;2</a></li>
+<li>If we&rsquo;re going to add create, update, and delete, we should add <em>permissions</em><ul>
+<li>The ability to perform an operation on a thing</li>
 </ul>
 </li>
-<li>Relationships are as important as tables<ul>
-<li>staff to experiment: many to many (implemented as a <em>join table</em>)</li>
-<li>experiment to plate: one to many</li>
-<li>invalidated to plate: zero or one to one</li>
+<li>Standard approach:<ul>
+<li>An <em>actor</em> (person or similar) has zero or more <em>roles</em></li>
+<li>Each <em>role</em> is a collection of pairs of <em>subject</em> and <em>permission</em></li>
+<li>E.g., <em>Reader</em> role has <em>read</em> permission for all tables</li>
 </ul>
 </li>
-<li>Every model is a lie<ul>
-<li>Is someone who helped review a plate listed as an experimenter?</li>
-<li>We aren&rsquo;t listing a reason for invalidating a plate</li>
-<li>We create models to represent the world, but then those models shape our view of the world</li>
+<li>Represent permissions in the database</li>
+<li>But how to know which queries are going to do what to which tables?<ul>
+<li>Store metadata in the on-disk query files (e.g., as embedded comments)</li>
+<li>Move our queries into our Python code (object with query and metadata)</li>
+<li>First approach requires us to write a parser, so it&rsquo;s probably a bad idea</li>
+<li>We can always export the SQL queries from our Python code for testing</li>
+<li>So some quick refactoring…</li>
 </ul>
 </li>
-<li>We can use an ORM to translate classes to tables and rows to objects<ul>
-<li>SQLModel is a good one, but getting the plumbing right is hard</li>
-<li>Not least because the error messages are difficult to understand</li>
+<li>Add two tables<ul>
+<li><code>role</code> is a many-to-many join table</li>
+<li><code>capabilities</code> defines what roles mean (with wildcard for &ldquo;all tables&rdquo;)</li>
+<li>Load into memory at start of program and turn into lookup table</li>
+<li>Expect roles and capabilities to change infrequently, so can reload in our server once we have one</li>
 </ul>
 </li>
-<li>Take a human-scale approach instead<ul>
-<li>Each query is stored in its own <code>.sql</code> file (which allows us to run it directly for interactive testing)</li>
-<li>Load all of those queries into a dict at the start of the program</li>
-<li>Use a row factory to turn query result rows into dicts</li>
-<li>Figure out inserts and deletes later</li>
-</ul>
-</li>
-<li>We are doing this backward<ul>
-<li>Should figure out what the interface needs to display and <em>then</em> come up with queries</li>
-<li>But we can build a few simple things to test our approach in minutes</li>
-</ul>
-</li>
-<li>How do we test this?<ul>
-<li>Our synthesized dataset is too big to be easily understood, and might change</li>
-<li>Create a smaller fixture as an in-memory database</li>
+<li>Implement as checking function that throws an exception</li>
+<li>Notice that there isn&rsquo;t a widely-known Python library for handling permissions</li>
+<li>And that it only works if we implement the check in our code<ul>
+<li>Databases like PostgreSQL implement fine-grained permissions on tables and even rows</li>
+<li>But someone still has to set it up</li>
+<li>And if someone has access to the underlying <code>.db</code> file, the permissions in our Python are moot</li>
 </ul>
 </li>
 </ul>

@@ -37,7 +37,7 @@
   <a href="#printable">Skip to content</a>
 </div>
 
-<ol class="toc-chapters"><li><a href="intro/">Introduction</a></li><li><a href="db/">The Database</a></li><li><a href="finale/">Conclusion</a></li></ol>
+<ol class="toc-chapters"><li><a href="intro/">Introduction</a></li><li><a href="db/">The Database</a></li><li><a href="perm/">Permissions</a></li><li><a href="finale/">Conclusion</a></li></ol>
 <ol class="toc-appendices"><li><a href="bib/">Bibliography</a></li><li><a href="license/">License</a></li><li><a href="conduct/">Code of Conduct</a></li><li><a href="contrib/">Contributing</a></li><li><a href="data/">Data</a></li><li><a href="glossary/">Glossary</a></li><li><a href="colophon/">Colophon</a></li><li><a href="contents/">Index</a></li></ol>
 
 
@@ -72,53 +72,33 @@ that has somehow morphed into a lesson on human-scale computing.</p>
 </blockquote>
 <p>So what would I use for #3?</p>
 <ol>
-<li>
-<p><a href="https://sqlite.org/">SQLite</a> for storage.
-    (<a href="https://duckdb.org/">DuckDB</a> is cool, but I&rsquo;m being deliberately conservative in my choices.)</p>
-</li>
-<li>
-<p>I wouldn&rsquo;t use an object-relational mapper:
+<li><a href="https://sqlite.org/">SQLite</a> for storage.
+    (<a href="https://duckdb.org/">DuckDB</a> is cool, but I&rsquo;m being deliberately conservative in my choices.)</li>
+<li>I wouldn&rsquo;t use an object-relational mapper:
     I&rsquo;ve used <a href="https://www.sqlalchemy.org/">SQLAlchemy</a> for years,
-    but I think embedded SQL is easier to debug than an ORM for small-to-medium use cases.</p>
-</li>
-<li>
-<p><a href="https://bottlepy.org/">Bottle</a> on the back end
+    but I think embedded SQL is easier to debug than an ORM for small-to-medium use cases.</li>
+<li><a href="https://bottlepy.org/">Bottle</a> on the back end
     because it has stayed small while <a href="https://flask.palletsprojects.com/">Flask</a> keeps growing.
     Note that I wouldn&rsquo;t use type hints in the Python code:
-    if I wanted to write Java, I&rsquo;d write Java.</p>
-</li>
-<li>
-<p><a href="http://www.dmulholl.com/docs/ibis/master/">Ibis</a> templates
+    if I wanted to write Java, I&rsquo;d write Java.</li>
+<li><a href="http://www.dmulholl.com/docs/ibis/master/">Ibis</a> templates
     because they&rsquo;re simpler than <a href="https://jinja.palletsprojects.com/">Jinja</a>.
-    (See also <a href="https://third-bit.com/2024/02/25/community-norms/">this post</a>.)</p>
-</li>
-<li>
-<p><a href="https://mamba.readthedocs.io/">mamba</a>,
+    (See also <a href="https://third-bit.com/2024/02/25/community-norms/">this post</a>.)</li>
+<li><a href="https://mamba.readthedocs.io/">mamba</a>,
     <a href="https://docs.astral.sh/ruff/">ruff</a>,
-    and <a href="https://github.com/astral-sh/uv">uv</a> for Python tooling.</p>
-</li>
-<li>
-<p><a href="https://alpinejs.dev/">Alpine.js</a> as a front-end framework
+    and <a href="https://github.com/astral-sh/uv">uv</a> for Python tooling.</li>
+<li><a href="https://alpinejs.dev/">Alpine.js</a> as a front-end framework
     because <a href="https://htmx.org/">htmx</a> feels a bit left-field
-    and <a href="https://react.dev/">React</a> and <a href="https://vuejs.org/">Vue</a> seem bent on cosplaying Enterprise Java.</p>
-</li>
-<li>
-<p><a href="https://www.npmjs.com/">npm</a>,
+    and <a href="https://react.dev/">React</a> and <a href="https://vuejs.org/">Vue</a> seem bent on cosplaying Enterprise Java.</li>
+<li><a href="https://www.npmjs.com/">npm</a>,
     <a href="https://vitejs.dev/">Vite</a>,
-    and <a href="https://standardjs.com/">StandardJS</a> for JavaScript tooling.</p>
-</li>
-<li>
-<p><a href="https://ui.mantine.dev/">Mantine</a> for the UI,
+    and <a href="https://standardjs.com/">StandardJS</a> for JavaScript tooling.</li>
+<li><a href="https://ui.mantine.dev/">Mantine</a> for the UI,
     though I could be persuaded to stick to <a href="https://getbootstrap.com/">Bootstrap</a>.
-    (I&rsquo;ve never really gotten <a href="https://tailwindcss.com/">Tailwind</a>.)</p>
-</li>
-<li>
-<p><a href="https://pa11y.org/">Pa11y</a> for accessibility testing
-    (because <a href="https://wave.webaim.org/standalone">the standalone version of WebAIM WAVE</a> costs US$4000/year).</p>
-</li>
-<li>
-<p><a href="https://www.netlify.com/">Netlify</a> for deployment.</p>
-</li>
+    (I&rsquo;ve never really gotten <a href="https://tailwindcss.com/">Tailwind</a>.)</li>
+<li><a href="https://pa11y.org/">Pa11y</a> for accessibility testing
+    (because <a href="https://wave.webaim.org/standalone">the standalone version of WebAIM WAVE</a> costs US$4000/year).</li>
+<li><a href="https://www.netlify.com/">Netlify</a> for deployment.</li>
 </ol>
 <p>This list deliberately isn&rsquo;t <a href="https://third-bit.com/2024/04/18/a-new-stack/">an entirely new stack</a>,
 but it&rsquo;s also not entirely conservative.
@@ -144,58 +124,35 @@ My learner persona is:</p>
 </ol>
 </blockquote>
 <ol>
-<li>
-<p>The motivating example would be a <em>laboratory information management system</em> (LIMS)
-    designed to handle field samples and laboratory experiments.</p>
-</li>
-<li>
-<p><em>Database schema design</em>:
-    I&rsquo;d start with something simple and extend it chapter by chapter.</p>
-</li>
-<li>
-<p>…which means the list above should have included a <em>database migration</em> tool like <a href="https://sqitch.org/">Sqitch</a>.</p>
-</li>
-<li>
-<p>Building a <em>command-line user interface</em> (CLUI) for administration, batch operations, and testing
+<li>The motivating example would be a <em>laboratory information management system</em> (LIMS)
+    designed to handle field samples and laboratory experiments.</li>
+<li><em>Database schema design</em>:
+    I&rsquo;d start with something simple and extend it chapter by chapter.</li>
+<li>…which means the list above should have included a <em>database migration</em> tool like <a href="https://sqitch.org/">Sqitch</a>.</li>
+<li>Building a <em>command-line user interface</em> (CLUI) for administration, batch operations, and testing
     (which means adding <a href="https://docs.pytest.org/">pytest</a> and <a href="https://click.palletsprojects.com/">Click</a>
-    to the list of tools.)</p>
-</li>
-<li>
-<p><em>Authentication</em>:
+    to the list of tools.)</li>
+<li><em>Authentication</em>:
     it&rsquo;s straightforward to add this to the CLUI,
     but will require something like <a href="https://flask-login.readthedocs.io/">Flask-Login</a> for the web UI.
     I don&rsquo;t know of a framework-agnostic alternative,
-    so I might have to revisit my decision to use Bottle.</p>
-</li>
-<li>
-<p><em>Routing URLs</em> to handler functions
-    (and redirecting when authentication is needed).</p>
-</li>
-<li>
-<p><em>Permissions</em>,
+    so I might have to revisit my decision to use Bottle.</li>
+<li><em>Routing URLs</em> to handler functions
+    (and redirecting when authentication is needed).</li>
+<li><em>Permissions</em>,
     which means <em>user roles</em>.
     Again,
     <a href="https://flask-user.readthedocs.io/">Flask-User</a> does this and I don&rsquo;t know of a framework-agnostic alternative,
-    so yeah, Flask…</p>
-</li>
-<li>
-<p><em>Generating pages from templates</em> and <em>form handling</em>.
+    so yeah, Flask…</li>
+<li><em>Generating pages from templates</em> and <em>form handling</em>.
     I hope we&rsquo;ve all outgrown single-page applications,
-    so <em>site architecture design</em> as a complement to schema design will need to be here.</p>
-</li>
-<li>
-<p><em>Paging</em> for displaying large data sets and <em>plotting</em> for displaying data graphically.</p>
-</li>
-<li>
-<p><em>Responsive web design</em> because most a lot of people use their phones more than their laptops
-    (particularly when they&rsquo;re in the field).</p>
-</li>
-<li>
-<p><em>Accessibility</em> because I&rsquo;d be ashamed not to
-    and because <a href="https://educate.elsevier.com/book/details/9780128044674">I&rsquo;m not getting any younger</a>.</p>
-</li>
-<li>
-<p><em>Security</em> is a hard one.
+    so <em>site architecture design</em> as a complement to schema design will need to be here.</li>
+<li><em>Paging</em> for displaying large data sets and <em>plotting</em> for displaying data graphically.</li>
+<li><em>Responsive web design</em> because most a lot of people use their phones more than their laptops
+    (particularly when they&rsquo;re in the field).</li>
+<li><em>Accessibility</em> because I&rsquo;d be ashamed not to
+    and because <a href="https://educate.elsevier.com/book/details/9780128044674">I&rsquo;m not getting any younger</a>.</li>
+<li><em>Security</em> is a hard one.
     <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS</a>,
     <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery">CSRF</a>,
     <a href="https://en.wikipedia.org/wiki/SQL_injection">SQL injection</a>,
@@ -208,8 +165,7 @@ My learner persona is:</p>
     &ldquo;How to build websites that can&rsquo;t be exploited by abusive domestic partners.&rdquo;
     I really don&rsquo;t know what I could do here that wouldn&rsquo;t require a second book;
     I would try crowdsourcing it like <a href="https://aosabook.org/"><em>The Architecture of Open Source Applications</em></a>,
-    but that didn&rsquo;t go anywhere <a href="https://third-bit.com/2024/01/23/the-votes-are-in/">the last time I tried it</a>.</p>
-</li>
+    but that didn&rsquo;t go anywhere <a href="https://third-bit.com/2024/01/23/the-votes-are-in/">the last time I tried it</a>.</li>
 </ol>
 <p>This book will probably never happen,
 but probably isn&rsquo;t the same as definitely.
@@ -217,26 +173,20 @@ If you think of anything else that ought to be included,
 please <a href="mailto:gvwilson@third-bit.com">let me know</a>.</p>
 <p>Later:</p>
 <ul>
-<li>
-<p>Irving Reid pointed out that running the application is as important as building it,
+<li>Irving Reid pointed out that running the application is as important as building it,
     and suggested the lessons should include creating and restoring backups,
     deploying updates,
     and observability
     (which involves more than creating log messages that are findable, comprehensible, and informative,
-    but that would be a good start).</p>
-</li>
-<li>
-<p>Someone else (name unknown) felt that dependency maintenance should be on the list as well,
+    but that would be a good start).</li>
+<li>Someone else (name unknown) felt that dependency maintenance should be on the list as well,
     i.e.,
-    that there should be a lesson about vulnerability scans and automating checks for dependency updates.</p>
-</li>
-<li>
-<p>Someone else (name also unknown) suggested that there ought to be a lesson on debugging full-stack applications,
+    that there should be a lesson about vulnerability scans and automating checks for dependency updates.</li>
+<li>Someone else (name also unknown) suggested that there ought to be a lesson on debugging full-stack applications,
     and that the lessons should show how to create good pull requests and how to review them.
     I strongly agree,
     but teaching verbs is a lot harder than teaching nouns,
-    and this is already far too ambitious for something that would already take a year of unpaid work.</p>
-</li>
+    and this is already far too ambitious for something that would already take a year of unpaid work.</li>
 </ul>
 	</main>
 	<footer>

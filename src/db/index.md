@@ -14,7 +14,7 @@ syllabus:
     -   Each *experiment* uses one or more *plates* on a particular date
     -   A *plate* may be *invalidated* by a single *staff* on a particular date
 -   Relationships are as important as tables
-    -   staff to experiment: many to many
+    -   staff to experiment: many to many (implemented as a *join table*)
     -   experiment to plate: one to many
     -   invalidated to plate: zero or one to one
 -   Every model is a lie
@@ -35,4 +35,3 @@ syllabus:
 -   How do we test this?
     -   Our synthesized dataset is too big to be easily understood, and might change
     -   Create a smaller fixture as an in-memory database
--   That was a good hour, wasn't it?
