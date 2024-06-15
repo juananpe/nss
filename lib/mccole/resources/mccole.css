@@ -320,7 +320,7 @@ ol.toc-chapters li {
 }
 
 /* Note to self */
-p.fixme {
+span.fixme {
     text-decoration-line: underline;
     text-decoration-color: var(--color-warning);
 }

@@ -12,4 +12,4 @@ def fixme(pargs, kwargs, node):
         (len(pargs) == 1) and (not kwargs),
         f"Bad 'fixme' in {node.path}: '{pargs}' and '{kwargs}'",
     )
-    return f'<p class="fixme">FIXME: {util.markdownify(pargs[0])}</p>'
+    return f'<span class="fixme">FIXME: {util.markdownify(pargs[0])}</span>'
