@@ -23,7 +23,8 @@ chapters = [
     "db",
     "perm",
     "backup",
-    "cmdline",
+    "clui",
+    "server",
     "finale",
 ]
 
