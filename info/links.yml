@@ -1,5 +1,9 @@
 # A
 
+- key: "alpine"
+  url: "https://alpinejs.dev/"
+  title: "Alpine.js"
+
 - key: "ark"
   url: "https://www.dmulholl.com/docs/ark/main/"
   title: "Ark static site generator"
@@ -10,21 +14,47 @@
 
 # B
 
+- key: "bootstrap"
+  url: "https://getbootstrap.com/"
+  title: "Bootstrap"
+
+- key: "bottle"
+  url: "https://bottlepy.org/"
+  title: "Bottle"
+
 - key: "bs4"
   url: "https://pypi.org/project/beautifulsoup4/"
   title: "Beautiful Soup"
 
+# C
+
+- key: "click"
+  url: "https://click.palletsprojects.com/"
+  title: "Click"
+
 # D
+
+- key: "dash"
+  url: "https://dash.plotly.com/"
+  title: "Dash"
 
 - key: "draw_io"
   url: "https://www.drawio.com/"
   title: "draw.io"
+
+- key: "DuckDB"
+  url: "https://duckdb.org/"
+  title: "DuckDB"
 
 # F
 
 - key: "faker"
   url: "https://faker.readthedocs.io/"
   title: "Faker module"
+
+- key: "flask"
+  url: "https://flask.palletsprojects.com/"
+  title: "Flask"
 
 # G
 
@@ -46,13 +76,51 @@
   url: "https://pypi.org/project/html5validator/"
   title: "html5validator"
 
+- key: "htmx"
+  url: "https://htmx.org/"
+  title: "htmx"
+
+# I
+
+- key: "Ibis"
+  url: "http://www.dmulholl.com/docs/ibis/master/"
+  title: "Ibis"
+
+# J
+
+- key: "jinja"
+  url: "https://jinja.palletsprojects.com/"
+  title: "Jinja"
+
+# M
+
+- key: "mamba"
+  url: "https://mamba.readthedocs.io/"
+  title: "mamba"
+
+- key: "mantine"
+  url: "https://ui.mantine.dev/"
+  title: "Mantine"
+
 # N
 
 - key: navarro_danielle
   url: "https://art.djnavarro.net/"
   title: "Danielle Navarro"
 
+- key: "netlify"
+  url: "https://www.netlify.com/"
+  title: "Netlify"
+
+- key: "npm"
+  url: "https://www.npmjs.com/"
+  title: "npm"
+
 # P
+
+- key: "pa11y"
+  url: "https://pa11y.org/"
+  title: "Pa11y"
 
 - key: "plausible"
   url: "https://plausible.io/"
@@ -70,21 +138,71 @@
   url: "https://pypi.org/project/pybtex/"
   title: "pybtex"
 
+- key: "pytest"
+  url: "https://docs.pytest.org/"
+  title: "pytest"
+
 # R
+
+- key: "react"
+  url: "https://react.dev/"
+  title: "React"
 
 - key: "repo"
   url: https://github.com/gvwilson/snailz
   title: "GitHub repository"
 
 - key: "ruff"
-  url: "https://pypi.org/project/ruff/"
+  url: "https://docs.astral.sh/ruff/"
   title: "ruff"
 
 # S
 
+- key: "snyk"
+  url: "https://snyk.io/"
+  title: "Snyk"
+
+- key: "sqitch"
+  url: "https://sqitch.org/"
+  title: "Sqitch"
+
+- key: "sqlalchemy"
+  url: "https://www.sqlalchemy.org/"
+  title: "SQLAlchemy"
+
+- key: "sqlite"
+  url: "https://sqlite.org/"
+  title: "SQLite"
+
 - key: "stamps"
   url: "https://third-bit.com/colophon/"
   title: "Classic Canadian postage stamps"
+
+- key: "standardjs"
+  url: "https://standardjs.com/"
+  title: "StandardJS"
+
+# T
+
+- key: "tailwind"
+  url: "https://tailwindcss.com/"
+  title: "Tailwind"
+
+# U
+
+- key: "uv"
+  url: "https://github.com/astral-sh/uv"
+  title: "uv"
+
+# V
+
+- key: "vite"
+  url: "https://vitejs.dev/"
+  title: "Vite"
+
+- key: "vue"
+  url: "https://vuejs.org/"
+  title: "Vue"
 
 # W
 

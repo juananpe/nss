@@ -11,38 +11,39 @@ I recently posted on Mastodon:
 
 So what would I use for #3?
 
-1.  [SQLite](https://sqlite.org/) for storage.
-    ([DuckDB](https://duckdb.org/) is cool, but I'm being deliberately conservative in my choices.)
+1.  [SQLite][sqlite] for storage.
+    ([DuckDB][duckdb] is cool, but I'm being deliberately conservative in my choices.)
 1.  I wouldn't use an object-relational mapper:
-    I've used [SQLAlchemy](https://www.sqlalchemy.org/) for years,
+    I've used [SQLAlchemy][sqlalchemy] for years,
     but I think embedded SQL is easier to debug than an ORM for small-to-medium use cases.
-1.  [Bottle](https://bottlepy.org/) on the back end
-    because it has stayed small while [Flask](https://flask.palletsprojects.com/) keeps growing.
+1.  [Bottle][bottle] on the back end
+    because it has stayed small while [Flask][flask] keeps growing
+    (but see discussion below).
     Note that I wouldn't use type hints in the Python code:
     if I wanted to write Java, I'd write Java.
-1.  [Ibis](http://www.dmulholl.com/docs/ibis/master/) templates
-    because they're simpler than [Jinja](https://jinja.palletsprojects.com/).
+1.  [Ibis][ibis] templates
+    because they're simpler than [Jinja][jinja].
     (See also [this post](https://third-bit.com/2024/02/25/community-norms/).)
-1.  [mamba](https://mamba.readthedocs.io/),
-    [ruff](https://docs.astral.sh/ruff/),
-    and [uv](https://github.com/astral-sh/uv) for Python tooling.
-1.  [Alpine.js](https://alpinejs.dev/) as a front-end framework
-    because [htmx](https://htmx.org/) feels a bit left-field
-    and [React](https://react.dev/) and [Vue](https://vuejs.org/) seem bent on cosplaying Enterprise Java.
-1.  [npm](https://www.npmjs.com/),
-    [Vite](https://vitejs.dev/),
-    and [StandardJS](https://standardjs.com/) for JavaScript tooling.
-1.  [Mantine](https://ui.mantine.dev/) for the UI,
-    though I could be persuaded to stick to [Bootstrap](https://getbootstrap.com/).
-    (I've never really gotten [Tailwind](https://tailwindcss.com/).)
-1.  [Pa11y](https://pa11y.org/) for accessibility testing
-    (because [the standalone version of WebAIM WAVE](https://wave.webaim.org/standalone) costs US$4000/year).
-1.  [Netlify](https://www.netlify.com/) for deployment.
+1.  [mamba][mamba],
+    [ruff][ruff],
+    and [uv][uf] for Python tooling.
+1.  [Alpine.js][alpine] as a front-end framework
+    because [htmx][htmx] feels a bit left-field
+    and [React][react] and [Vue][vue] seem bent on cosplaying Enterprise Java.
+1.  [npm][npm],
+    [Vite][vite],
+    and [StandardJS][standardjs] for JavaScript tooling.
+1.  [Mantine][mantine] for the UI,
+    though I could be persuaded to stick to [Bootstrap][bootstrap].
+    (I've never really gotten [Tailwind][tailwind].)
+1.  [Pa11y][pa11y] for accessibility testing
+    (because [the standalone version](https://wave.webaim.org/standalone) of [WebAIM WAVE][wave] costs US$4000/year).
+1.  [Netlify][netlify] for deployment.
 
 This list deliberately isn't [an entirely new stack](https://third-bit.com/2024/04/18/a-new-stack/),
 but it's also not entirely conservative.
 I know it should include a security auditing tool to sit beside Pa11y,
-but while I've watched people use [Snyk](https://snyk.io/)
+but while I've watched people use [Snyk][snyk]
 I don't have any experience with it or alternatives.
 
 So much for tools:
@@ -52,7 +53,7 @@ My learner persona is:
 > 1.  Carter has a BSc in bioinformatics
 >     and now works as a data scientist for a mid-sized therapeutics company.
 > 1.  They know Python well enough to analyze data for their colleagues
->     and build dashboards using [Dash](https://dash.plotly.com/),
+>     and build dashboards using [Dash][dash],
 >     but only ever did a couple of assignments using JavaScript.
 > 1.  Carter wants to build something to replace their company's aging PHP-based record keeping tools.
 > 1.  Carter has an [idiopathic tremor](https://en.wikipedia.org/wiki/Essential_tremor)
@@ -65,9 +66,9 @@ My learner persona is:
     designed to handle field samples and laboratory experiments.
 1.  *Database schema design*:
     I'd start with something simple and extend it chapter by chapter.
-1.  …which means the list above should have included a *database migration* tool like [Sqitch](https://sqitch.org/).
+1.  …which means the list above should have included a *database migration* tool like [Sqitch][sqitch].
 1.  Building a *command-line user interface* (CLUI) for administration, batch operations, and testing
-    (which means adding [pytest](https://docs.pytest.org/) and [Click](https://click.palletsprojects.com/)
+    (which means adding [pytest][pytest] and [Click][click]
     to the list of tools.)
 1.  *Authentication*:
     it's straightforward to add this to the CLUI,
@@ -125,3 +126,48 @@ Later:
     I strongly agree,
     but teaching verbs is a lot harder than teaching nouns,
     and this is already far too ambitious for something that would already take a year of unpaid work.
+
+[alpine]: https://alpinejs.dev/
+[ark]: https://www.dmulholl.com/docs/ark/main/
+[atkinson]: https://brailleinstitute.org/freefont
+[bootstrap]: https://getbootstrap.com/
+[bottle]: https://bottlepy.org/
+[bs4]: https://pypi.org/project/beautifulsoup4/
+[click]: https://click.palletsprojects.com/
+[dash]: https://dash.plotly.com/
+[draw_io]: https://www.drawio.com/
+[DuckDB]: https://duckdb.org/
+[faker]: https://faker.readthedocs.io/
+[flask]: https://flask.palletsprojects.com/
+[geopy]: https://geopy.readthedocs.io/
+[ghp]: https://pages.github.com/
+[highlight_css]: https://numist.github.io/highlight-css/
+[html5validator]: https://pypi.org/project/html5validator/
+[htmx]: https://htmx.org/
+[Ibis]: http://www.dmulholl.com/docs/ibis/master/
+[jinja]: https://jinja.palletsprojects.com/
+[mamba]: https://mamba.readthedocs.io/
+[mantine]: https://ui.mantine.dev/
+[navarro_danielle]: https://art.djnavarro.net/
+[netlify]: https://www.netlify.com/
+[npm]: https://www.npmjs.com/
+[pa11y]: https://pa11y.org/
+[plausible]: https://plausible.io/
+[plotly]: https://plotly.com/
+[polars]: https://pola.rs/
+[pybtex]: https://pypi.org/project/pybtex/
+[pytest]: https://docs.pytest.org/
+[react]: https://react.dev/
+[repo]: https://github.com/gvwilson/snailz
+[ruff]: https://docs.astral.sh/ruff/
+[snyk]: https://snyk.io/
+[sqitch]: https://sqitch.org/
+[sqlalchemy]: https://www.sqlalchemy.org/
+[sqlite]: https://sqlite.org/
+[stamps]: https://third-bit.com/colophon/
+[standardjs]: https://standardjs.com/
+[tailwind]: https://tailwindcss.com/
+[uv]: https://github.com/astral-sh/uv
+[vite]: https://vitejs.dev/
+[vue]: https://vuejs.org/
+[wave]: https://wave.webaim.org/

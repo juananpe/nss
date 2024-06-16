@@ -134,6 +134,11 @@ style:
 reformat:
 	@ruff format .
 
+## links: create Markdown table links
+.PHONY: links
+links:
+	@python ${THEME_BIN}/links.py info/links.yml 
+
 ## pack: create a release
 .PHONY: pack
 pack:
