@@ -6,7 +6,7 @@
 <link rel="icon" href="../logo.svg">
 <link rel="stylesheet" href="../tango.css" type="text/css">
 <link rel="stylesheet" href="../mccole.css" type="text/css">
-<title>Human-Scale Software Development &middot; Permissions</title>
+<title>Human-Scale Software Development &middot; Displaying Data</title>
 <script>
   MathJax = {
     tex: {
@@ -50,7 +50,7 @@
 	  <div class="row notex">
   <div class="col-12 center">
     
-      <h1>Permissions</h1>
+      <h1>Displaying Data</h1>
     
   </div>
 </div>
@@ -58,13 +58,13 @@
 	  
 <nav class="row-always notex">
   <div class="col-1 left">
-    <a href="../db/" title="previous" class="undecorated">&#8678;</a>
+    <a href="../server/" title="previous" class="undecorated">&#8678;</a>
   </div>
   <div class="col-10 center">
     <a href="../" title="home" class="undecorated">&#9737;</a>
   </div>
   <div class="col-1 right">
-    <a href="../backup/" title="next" class="undecorated">&#8680;</a>
+    <a href="../finale/" title="next" class="undecorated">&#8680;</a>
   </div>
 </nav>
 
@@ -73,45 +73,35 @@
 <li>FIXME</li>
 </ul>
 	  
-	  <p><span class="fixme">FIXME: write permissions chapter</span></p>
+	  <p><span class="fixme">FIXME: write display chapter</span></p>
 <ul>
-<li>Everyone can read everything in <a href="../db/">Chapter&nbsp;2</a></li>
-<li>If we&rsquo;re going to add create, update, and delete, we should add <em>permissions</em><ul>
-<li>The ability to perform an operation on a thing</li>
+<li>Building a web UI is complex, so we split it into several lessons<ul>
+<li>Only interaction is selecting which read-only page to display next</li>
+<li>Will implement login, forms, and file upload in future lessons</li>
 </ul>
 </li>
-<li>Standard approach:<ul>
-<li>An <em>actor</em> (person or similar) has zero or more <em>roles</em></li>
-<li>Each <em>role</em> is a collection of pairs of <em>subject</em> and <em>permission</em></li>
-<li>E.g., <em>Reader</em> role has <em>read</em> permission for all tables</li>
+<li><a href="../server/">Chapter&nbsp;6</a> gave us an API for fetching data as JSON</li>
+<li>Turn that into HTML using <a href="https://json2html.com/">json2html</a><ul>
+<li>Would be easy to write our own utility, but why bother?</li>
+<li>The answer is, &ldquo;Because now we have to audit that package for security&rdquo;</li>
 </ul>
 </li>
-<li>Represent permissions in the database</li>
-<li>But how to know which queries are going to do what to which tables?<ul>
-<li>Store metadata in the on-disk query files (e.g., as embedded comments)</li>
-<li>Move our queries into our Python code (object with query and metadata)</li>
-<li>First approach requires us to write a parser, so it&rsquo;s probably a bad idea</li>
-<li>We can always export the SQL queries from our Python code for testing</li>
-<li>So some quick refactoring…</li>
+<li>Each page displays data as a table<ul>
+<li>Some elements are links to other tables</li>
 </ul>
 </li>
-<li>Modify existing table to add user ID to staff table<ul>
-<li>Worry about authentication (proof of identity) later</li>
+<li>Construct URLs with functions rather than template strings because we might change our minds<ul>
+<li>A good design is one that makes plausible changes easy</li>
+<li>Which usually means making each decision in exactly one place</li>
 </ul>
 </li>
-<li>Add two new tables<ul>
-<li><code>role</code> is a many-to-many join table</li>
-<li><code>capabilities</code> defines what roles mean (with wildcard for &ldquo;all tables&rdquo;)</li>
-<li>Load into memory at start of program and turn into lookup table</li>
-<li>Expect roles and capabilities to change infrequently, so can reload in our server once we have one</li>
+<li>Note: could (should?) render on the server using <a href="https://jinja.palletsprojects.com/">Jinja</a> or <a href="http://www.dmulholl.com/docs/ibis/master/">Ibis</a>, but we&rsquo;ve decided to build it this way<ul>
+<li>When people talk about &ldquo;software architecture&rdquo;, this is the kind of decision they&rsquo;re talking about</li>
 </ul>
 </li>
-<li>Implement as checking function that throws an exception</li>
-<li>Notice that there isn&rsquo;t a widely-known Python library for handling permissions</li>
-<li>And that it only works if we implement the check in our code<ul>
-<li>Databases like <a href="https://www.postgresql.org/">PostgreSQL</a> implement fine-grained permissions on tables and even rows</li>
-<li>But someone still has to set it up</li>
-<li>And if someone has access to the underlying <code>.db</code> file, the permissions in our Python are moot</li>
+<li>Asynchronous execution<ul>
+<li>Page loads, sends request, gets response, finishes rendering</li>
+<li>That potential delay is a good reason to render on the server</li>
 </ul>
 </li>
 </ul>

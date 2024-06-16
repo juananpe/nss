@@ -37,7 +37,7 @@
   <a href="#printable">Skip to content</a>
 </div>
 
-<ol class="toc-chapters"><li><a href="../intro/">Introduction</a></li><li><a href="../db/">The Database</a></li><li><a href="../perm/">Permissions</a></li><li><a href="../backup/">Backup and Migration</a></li><li><a href="../clui/">The Command Line</a></li><li><a href="../server/">The Server</a></li><li><a href="../finale/">Conclusion</a></li></ol>
+<ol class="toc-chapters"><li><a href="../intro/">Introduction</a></li><li><a href="../db/">The Database</a></li><li><a href="../perm/">Permissions</a></li><li><a href="../backup/">Backup and Migration</a></li><li><a href="../clui/">The Command Line</a></li><li><a href="../server/">The Server</a></li><li><a href="../display/">Displaying Data</a></li><li><a href="../finale/">Conclusion</a></li></ol>
 <ol class="toc-appendices"><li><a href="../bib/">Bibliography</a></li><li><a href="../license/">License</a></li><li><a href="../conduct/">Code of Conduct</a></li><li><a href="../contrib/">Contributing</a></li><li><a href="../data/">Data</a></li><li><a href="../glossary/">Glossary</a></li><li><a href="../colophon/">Colophon</a></li><li><a href="../contents/">Index</a></li></ol>
 
 
@@ -81,13 +81,13 @@
 <li>Alternative is to build REST API and then wrap that</li>
 </ul>
 </li>
-<li>Simple tools can use <code>argparse</code>, but that becomes messy with sub-commands</li>
+<li>Simple tools can use <a href="https://docs.python.org/3/library/argparse.html">argparse</a>, but that becomes messy with sub-commands</li>
 <li>Start by showing schema<ul>
-<li>Let user select output format via <code>prettytable</code> module (Markdown, HTML, CSV, etc.)</li>
+<li>Let user select output format via <a href="https://pypi.org/project/prettytable/">prettytable</a> module (Markdown, HTML, CSV, etc.)</li>
 </ul>
 </li>
 <li>Show entire table by name<ul>
-<li>SQLite will tell us the column names and types, so we don&rsquo;t hard code those</li>
+<li><a href="https://sqlite.org/">SQLite</a> will tell us the column names and types, so we don&rsquo;t hard code those</li>
 <li>Design principle: is it easy to adapt code to plausible requirements changes?</li>
 </ul>
 </li>

@@ -13,11 +13,11 @@ syllabus:
     -   Automate operations in a reproducible/auditable way
     -   Figure out what those operations should be
     -   Alternative is to build REST API and then wrap that
--   Simple tools can use `argparse`, but that becomes messy with sub-commands
+-   Simple tools can use [argparse][argparse], but that becomes messy with sub-commands
 -   Start by showing schema
-    -   Let user select output format via `prettytable` module (Markdown, HTML, CSV, etc.)
+    -   Let user select output format via [prettytable][prettytable] module (Markdown, HTML, CSV, etc.)
 -   Show entire table by name
-    -   SQLite will tell us the column names and types, so we don't hard code those
+    -   [SQLite][sqlite] will tell us the column names and types, so we don't hard code those
     -   Design principle: is it easy to adapt code to plausible requirements changes?
 -   Add authentication before adding create, update, and delete
     -   Username and password on the command line is easy but unsafe

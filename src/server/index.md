@@ -12,7 +12,7 @@ syllabus:
 -   We defined and implemented a handful of CRUD operations in [%x clui %]
 -   Next step is to write a server to perform those in response to web requests
     -   Don't handle HTTP requests directly
-    -   Instead, use a framework like Flask or Bottle
+    -   Instead, use a framework like [Flask][flask] or [Bottle][bottle]
 -   Each operation is identified by a URL and an HTTP method
     -   `GET` to fetch data
     -   `PUT` to create data

@@ -21,7 +21,7 @@ syllabus:
     -   `cron`'s syntax is annoying
     -   [%fixme "what to recommend instead of cron" %]
 -   But wait: if we back up, change the database structure and/or code, and then restore, what happens?
--   Use Sqitch to save the schema we had before we made our permission changes
+-   Use [Sqitch][sqitch] to save the schema we had before we made our permission changes
 -   Then use `sqitch add` to create our first migration
     -   `deploy/perms.sql`: modify the database forward
     -   `verify/perms.sql`: check the change

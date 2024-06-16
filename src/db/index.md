@@ -22,7 +22,7 @@ syllabus:
     -   We aren't listing a reason for invalidating a plate
     -   We create models to represent the world, but then those models shape our view of the world
 -   We can use an ORM to translate classes to tables and rows to objects
-    -   SQLModel is a good one, but getting the plumbing right is hard
+    -   [SQLModel][sqlmodel] is a good one, but getting the plumbing right is hard
     -   Not least because the error messages are difficult to understand
 -   Take a human-scale approach instead
     -   Each query is stored in its own `.sql` file (which allows us to run it directly for interactive testing)

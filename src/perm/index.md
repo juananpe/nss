@@ -33,6 +33,6 @@ syllabus:
 -   Implement as checking function that throws an exception
 -   Notice that there isn't a widely-known Python library for handling permissions
 -   And that it only works if we implement the check in our code
-    -   Databases like PostgreSQL implement fine-grained permissions on tables and even rows
+    -   Databases like [PostgreSQL][postgresql] implement fine-grained permissions on tables and even rows
     -   But someone still has to set it up
     -   And if someone has access to the underlying `.db` file, the permissions in our Python are moot

@@ -4,6 +4,10 @@
   url: "https://alpinejs.dev/"
   title: "Alpine.js"
 
+- key: "argparse"
+  url: "https://docs.python.org/3/library/argparse.html"
+  title: "argparse"
+
 - key: "ark"
   url: "https://www.dmulholl.com/docs/ark/main/"
   title: "Ark static site generator"
@@ -92,6 +96,10 @@
   url: "https://jinja.palletsprojects.com/"
   title: "Jinja"
 
+- key: "json2html"
+  url: "https://json2html.com/"
+  title: "json2html"
+
 # M
 
 - key: "mamba"
@@ -133,6 +141,14 @@
 - key: "polars"
   url: "https://pola.rs/"
   title: "Polars"
+
+- key: "postgresql"
+  url: "https://www.postgresql.org/"
+  title: "PostgreSQL"
+
+- key: "prettytable"
+  url: "https://pypi.org/project/prettytable/"
+  title: "prettytable"
 
 - key: "pybtex"
   url: "https://pypi.org/project/pybtex/"
