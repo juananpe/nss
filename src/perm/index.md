@@ -23,7 +23,9 @@ syllabus:
     -   First approach requires us to write a parser, so it's probably a bad idea
     -   We can always export the SQL queries from our Python code for testing
     -   So some quick refactoring…
--   Add two tables
+-   Modify existing table to add user ID to staff table
+    -   Worry about authentication (proof of identity) later
+-   Add two new tables
     -   `role` is a many-to-many join table
     -   `capabilities` defines what roles mean (with wildcard for "all tables")
     -   Load into memory at start of program and turn into lookup table

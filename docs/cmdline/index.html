@@ -6,7 +6,7 @@
 <link rel="icon" href="../logo.svg">
 <link rel="stylesheet" href="../tango.css" type="text/css">
 <link rel="stylesheet" href="../mccole.css" type="text/css">
-<title>Human-Scale Software Development &middot; Permissions</title>
+<title>Human-Scale Software Development &middot; The Command Line</title>
 <script>
   MathJax = {
     tex: {
@@ -50,7 +50,7 @@
 	  <div class="row notex">
   <div class="col-12 center">
     
-      <h1>Permissions</h1>
+      <h1>The Command Line</h1>
     
   </div>
 </div>
@@ -58,13 +58,13 @@
 	  
 <nav class="row-always notex">
   <div class="col-1 left">
-    <a href="../db/" title="previous" class="undecorated">&#8678;</a>
+    <a href="../backup/" title="previous" class="undecorated">&#8678;</a>
   </div>
   <div class="col-10 center">
     <a href="../" title="home" class="undecorated">&#9737;</a>
   </div>
   <div class="col-1 right">
-    <a href="../backup/" title="next" class="undecorated">&#8680;</a>
+    <a href="../finale/" title="next" class="undecorated">&#8680;</a>
   </div>
 </nav>
 
@@ -73,45 +73,51 @@
 <li>FIXME</li>
 </ul>
 	  
-	  <p><span class="fixme">FIXME: write permissions chapter</span></p>
+	  <p><span class="fixme">FIXME: write command line chapter</span></p>
 <ul>
-<li>Everyone can read everything in <a href="../db/">Chapter&nbsp;2</a></li>
-<li>If we&rsquo;re going to add create, update, and delete, we should add <em>permissions</em><ul>
-<li>The ability to perform an operation on a thing</li>
+<li>Why build a command-line user interface (CLUI)?<ul>
+<li>Automate operations in a reproducible/auditable way</li>
+<li>Figure out what those operations should be</li>
+<li>Alternative is to build REST API and then wrap that</li>
 </ul>
 </li>
-<li>Standard approach:<ul>
-<li>An <em>actor</em> (person or similar) has zero or more <em>roles</em></li>
-<li>Each <em>role</em> is a collection of pairs of <em>subject</em> and <em>permission</em></li>
-<li>E.g., <em>Reader</em> role has <em>read</em> permission for all tables</li>
+<li>Simple tools can use <code>argparse</code>, but that becomes messy with sub-commands</li>
+<li>Start by showing schema<ul>
+<li>Let user select output format via <code>prettytable</code> module (Markdown, HTML, CSV, etc.)</li>
 </ul>
 </li>
-<li>Represent permissions in the database</li>
-<li>But how to know which queries are going to do what to which tables?<ul>
-<li>Store metadata in the on-disk query files (e.g., as embedded comments)</li>
-<li>Move our queries into our Python code (object with query and metadata)</li>
-<li>First approach requires us to write a parser, so it&rsquo;s probably a bad idea</li>
-<li>We can always export the SQL queries from our Python code for testing</li>
-<li>So some quick refactoring…</li>
+<li>Show entire table by name<ul>
+<li>SQLite will tell us the column names and types, so we don&rsquo;t hard code those</li>
+<li>Design principle: is it easy to adapt code to plausible requirements changes?</li>
 </ul>
 </li>
-<li>Modify existing table to add user ID to staff table<ul>
-<li>Worry about authentication (proof of identity) later</li>
+<li>Add authentication before adding create, update, and delete<ul>
+<li>Username and password on the command line is easy but unsafe</li>
+<li>Prompt for password makes scripting impossible</li>
+<li>Asking the operating system who the user is doesn&rsquo;t work</li>
+<li>Token in a file or environment variable seems safest, but is clumsy for development</li>
 </ul>
 </li>
-<li>Add two new tables<ul>
-<li><code>role</code> is a many-to-many join table</li>
-<li><code>capabilities</code> defines what roles mean (with wildcard for &ldquo;all tables&rdquo;)</li>
-<li>Load into memory at start of program and turn into lookup table</li>
-<li>Expect roles and capabilities to change infrequently, so can reload in our server once we have one</li>
+<li>Options for create:<ul>
+<li>Use <code>--arg value</code> for every field (lots of typing)</li>
+<li>Upload a CSV file (but what if you only have one record to add?)</li>
+<li>Specify name=value pairs on the command line</li>
 </ul>
 </li>
-<li>Implement as checking function that throws an exception</li>
-<li>Notice that there isn&rsquo;t a widely-known Python library for handling permissions</li>
-<li>And that it only works if we implement the check in our code<ul>
-<li>Databases like PostgreSQL implement fine-grained permissions on tables and even rows</li>
-<li>But someone still has to set it up</li>
-<li>And if someone has access to the underlying <code>.db</code> file, the permissions in our Python are moot</li>
+<li>We also have to worry about database consistency<ul>
+<li>Can&rsquo;t add plate until we&rsquo;ve added its experiment</li>
+<li>Can&rsquo;t delete an experiment if there are still plates</li>
+<li><span class="fixme">FIXME: will SQLite constraints throw errors?</span></li>
+</ul>
+</li>
+<li>Error handling<ul>
+<li>Printing to <code>stderr</code> and halting is easy…</li>
+<li>…but what about multi-record insert: should the whole batch fail if any fail?</li>
+<li>And should messages always and only go to <code>stderr</code> or should they also be appended to a log file?</li>
+</ul>
+</li>
+<li>All of these problems will arise with web interface<ul>
+<li>Which is why the subtitle of this chapter is &ldquo;defining operations&rdquo;</li>
 </ul>
 </li>
 </ul>

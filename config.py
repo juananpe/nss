@@ -23,6 +23,7 @@ chapters = [
     "db",
     "perm",
     "backup",
+    "cmdline",
     "finale",
 ]
 
