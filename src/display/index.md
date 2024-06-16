@@ -26,3 +26,4 @@ syllabus:
 -   Asynchronous execution
     -   Page loads, sends request, gets response, finishes rendering
     -   That potential delay is a good reason to render on the server
+-   Testing with [Playwright][playwright]

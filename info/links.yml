@@ -4,6 +4,10 @@
   url: "https://alpinejs.dev/"
   title: "Alpine.js"
 
+- key: "aosa"
+  url: "https://aosabook.org/"
+  title: "The Architecture of Open Source Applications"
+
 - key: "argparse"
   url: "https://docs.python.org/3/library/argparse.html"
   title: "argparse"
@@ -36,6 +40,18 @@
   url: "https://click.palletsprojects.com/"
   title: "Click"
 
+- key: "community-norms"
+  url: "https://third-bit.com/2024/02/25/community-norms/"
+  title: "Community Norms blog post"
+
+- key: "cors"
+  url: "https://en.wikipedia.org/wiki/Cross-origin_resource_sharing"
+  title: "Cross-origin resource sharing (CORS)"
+
+- key: "csrf"
+  url: "https://en.wikipedia.org/wiki/Cross-site_request_forgery"
+  title: "Cross-site request forgery (CSRF)"
+
 # D
 
 - key: "dash"
@@ -60,6 +76,14 @@
   url: "https://flask.palletsprojects.com/"
   title: "Flask"
 
+- key: "flask_login"
+  url: "https://flask-login.readthedocs.io/"
+  title: "Flask-Login"
+
+- key: "flask_user"
+  url: "https://flask-user.readthedocs.io/"
+  title: "Flask-User"
+
 # G
 
 - key: "geopy"
@@ -76,6 +100,10 @@
   url: "https://numist.github.io/highlight-css/"
   title: "highlight-css"
 
+- key: "hoye_mike"
+  url: "https://exple.tive.org/blarg/"
+  title: "Mike Hoye"
+
 - key: "html5validator"
   url: "https://pypi.org/project/html5validator/"
   title: "html5validator"
@@ -89,6 +117,10 @@
 - key: "Ibis"
   url: "http://www.dmulholl.com/docs/ibis/master/"
   title: "Ibis"
+
+- key: "idiopathic_tremor"
+  url: "https://en.wikipedia.org/wiki/Essential_tremor"
+  title: "Essential tremor"
 
 # J
 
@@ -120,6 +152,10 @@
   url: "https://www.netlify.com/"
   title: "Netlify"
 
+- key: "new-stack"
+  url: "https://third-bit.com/2024/04/18/a-new-stack/"
+  title: "A New Stack blog post"
+
 - key: "npm"
   url: "https://www.npmjs.com/"
   title: "npm"
@@ -133,6 +169,10 @@
 - key: "plausible"
   url: "https://plausible.io/"
   title: "Plausible"
+
+- key: "playwright"
+  url: "https://playwright.dev/"
+  title: "Playwright"
 
 - key: "plotly"
   url: "https://plotly.com/"
@@ -182,6 +222,10 @@
   url: "https://sqitch.org/"
   title: "Sqitch"
 
+- key: "sql_injection"
+  url: "https://en.wikipedia.org/wiki/SQL_injection"
+  title: "SQL injection"
+
 - key: "sqlalchemy"
   url: "https://www.sqlalchemy.org/"
   title: "SQLAlchemy"
@@ -189,6 +233,10 @@
 - key: "sqlite"
   url: "https://sqlite.org/"
   title: "SQLite"
+
+- key: "sqlmodel"
+  url: "https://sqlmodel.tiangolo.com/"
+  title: "SQLModel"
 
 - key: "stamps"
   url: "https://third-bit.com/colophon/"
@@ -203,6 +251,10 @@
 - key: "tailwind"
   url: "https://tailwindcss.com/"
   title: "Tailwind"
+
+- key: "the_votes_are_in"
+  url: "https://third-bit.com/2024/01/23/the-votes-are-in/"
+  title: "The Votes Are In blog post"
 
 # U
 
@@ -225,3 +277,7 @@
 - key: "wave"
   url: "https://wave.webaim.org/"
   title: "WebAIM WAVE"
+
+- key: "wave-standalone"
+  url: "https://wave.webaim.org/standalone"
+  title: "WebAIM WAVE Standalone"

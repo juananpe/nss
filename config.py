@@ -26,6 +26,9 @@ chapters = [
     "clui",
     "server",
     "display",
+    "auth",
+    "update",
+    "a11y",
     "finale",
 ]
 
