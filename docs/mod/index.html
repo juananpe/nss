@@ -6,7 +6,7 @@
 <link rel="icon" href="../logo.svg">
 <link rel="stylesheet" href="../tango.css" type="text/css">
 <link rel="stylesheet" href="../mccole.css" type="text/css">
-<title>Human-Scale Software Development &middot; Backup and Migration</title>
+<title>Human-Scale Software Development &middot; Moderation</title>
 <script>
   MathJax = {
     tex: {
@@ -50,7 +50,7 @@
 	  <div class="row notex">
   <div class="col-12 center">
     
-      <h1>Backup and Migration</h1>
+      <h1>Moderation</h1>
     
   </div>
 </div>
@@ -58,13 +58,13 @@
 	  
 <nav class="row-always notex">
   <div class="col-1 left">
-    <a href="../perm/" title="previous" class="undecorated">&#8678;</a>
+    <a href="../a11y/" title="previous" class="undecorated">&#8678;</a>
   </div>
   <div class="col-10 center">
     <a href="../" title="home" class="undecorated">&#9737;</a>
   </div>
   <div class="col-1 right">
-    <a href="../clui/" title="next" class="undecorated">&#8680;</a>
+    <a href="../finale/" title="next" class="undecorated">&#8680;</a>
   </div>
 </nav>
 
@@ -73,44 +73,7 @@
 <li>FIXME</li>
 </ul>
 	  
-	  <p><span class="fixme">FIXME: write backup and migration chapter</span></p>
-<ul>
-<li>We added tables in <a href="../perm/">Chapter&nbsp;3</a> and we&rsquo;re about to implement create, update, and delete</li>
-<li>So we need to back up our database and manage <em>migration</em><ul>
-<li>And yeah, it&rsquo;s weird that the verb &ldquo;back up&rdquo; is two words and the noun &ldquo;backup&rdquo; is one</li>
-</ul>
-</li>
-<li>Three approaches to backup<ul>
-<li>Save the <code>.db</code> file</li>
-<li>Export as SQL</li>
-<li>Export as CSV</li>
-<li>We will use &ldquo;export as SQL&rdquo; because it&rsquo;s simpler than CSV and more readable than a <code>.db</code> file</li>
-</ul>
-</li>
-<li>Set up a regular task to do this (because humans are forgetful)<ul>
-<li><code>cron</code>&rsquo;s syntax is annoying</li>
-<li><span class="fixme">FIXME: what to recommend instead of cron</span></li>
-</ul>
-</li>
-<li>But wait: if we back up, change the database structure and/or code, and then restore, what happens?</li>
-<li>Use <a href="https://sqitch.org/">Sqitch</a> to save the schema we had before we made our permission changes</li>
-<li>Then use <code>sqitch add</code> to create our first migration<ul>
-<li><code>deploy/perms.sql</code>: modify the database forward</li>
-<li><code>verify/perms.sql</code>: check the change</li>
-<li><code>revert/perms.sql</code>: undo the change</li>
-</ul>
-</li>
-<li>Actions are recorded in a registry database</li>
-<li>Finally, record the Sqitch tag in the database itself<ul>
-<li>Makes database backups self-describing</li>
-</ul>
-</li>
-<li>We can now implement create and delete without losing sleep<ul>
-<li>Again, create little objects that know how to write specific things</li>
-<li>Check that all the incoming record dicts have the right keys before trying the operation</li>
-</ul>
-</li>
-</ul>
+	  <p><span class="fixme">FIXME: write comment moderation chapter</span></p>
 	</main>
 	<footer>
   © 2024 <a href="https://third-bit.com/">Greg Wilson</a>
