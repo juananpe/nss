@@ -29,6 +29,7 @@ chapters = [
     "auth",
     "update",
     "a11y",
+    "feed",
     "mod",
     "finale",
 ]
