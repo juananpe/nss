@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../logo.svg">
+<link rel="stylesheet" href="../tango.css" type="text/css">
+<link rel="stylesheet" href="../mccole.css" type="text/css">
+<title>Human-Scale Software Development &middot; Data Sets</title>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']]
+    }
+  };
+</script>
+<script
+  type="text/javascript"
+  id="MathJax-script"
+  async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+  <script defer data-domain="third-bit.com" src="https://plausible.io/js/plausible.js"></script>
+
+
+  </head>
+  <body>
+    <div class="row">
+      <div class="sidebar">
+        <p>
+  
+  <a href="../"><img src="../logo.svg" alt="site logo" class="logo" /></a>
+  
+</p>
+
+<div class="screen-reader-only">
+  <a href="#printable">Skip to content</a>
+</div>
+
+<ol class="toc-chapters"><li><a href="../intro/">Introduction</a></li><li><a href="../db/">The Database</a></li><li><a href="../perm/">Permissions</a></li><li><a href="../backup/">Backup and Migration</a></li><li><a href="../clui/">The Command Line</a></li><li><a href="../server/">The Server</a></li><li><a href="../display/">Displaying Data</a></li><li><a href="../auth/">Authentication</a></li><li><a href="../update/">Updating</a></li><li><a href="../a11y/">Accessibility</a></li><li><a href="../finale/">Conclusion</a></li></ol>
+<ol class="toc-appendices"><li><a href="../bib/">Bibliography</a></li><li><a href="../license/">License</a></li><li><a href="../conduct/">Code of Conduct</a></li><li><a href="../contrib/">Contributing</a></li><li><a href="../datagen/">Data Sets</a></li><li><a href="../glossary/">Glossary</a></li><li><a href="../colophon/">Colophon</a></li><li><a href="../contents/">Index</a></li></ol>
+
+
+
+<p><a href="https://github.com/gvwilson/snailz">GitHub repository</a></p>
+
+      </div>
+      <div id="printable" class="contents bordered">
+	<main>
+	  <div class="row notex">
+  <div class="col-12 center">
+    
+      <h1>Data Sets</h1>
+    
+  </div>
+</div>
+
+	  
+<nav class="row-always notex">
+  <div class="col-1 left">
+    <a href="../contrib/" title="previous" class="undecorated">&#8678;</a>
+  </div>
+  <div class="col-10 center">
+    <a href="../" title="home" class="undecorated">&#9737;</a>
+  </div>
+  <div class="col-1 right">
+    <a href="../glossary/" title="next" class="undecorated">&#8680;</a>
+  </div>
+</nav>
+
+
+	  
+	  
+	  <p>These data generators model genomic analysis of snails in the Pacific Northwest
+that are growing to unusual size as a result of exposure to pollution.</p>
+<ul>
+<li>One or more <em>surveys</em> are conducted at one or more <em>sites</em>.</li>
+<li>Each survey collects <em>genomes</em> and <em>sizes</em> of snails.</li>
+<li>A <em>grid</em> at each site is marked out to show the presence or absence of pollution.</li>
+<li><em>Laboratory staff</em> perform <em>assays</em> of the snails&rsquo; genetic material.</li>
+<li>Each assay plate has a <em>design</em> showing the material applied and <em>readings</em> showing the measured response.</li>
+<li>Plates may be <em>invalidated</em> after the fact if a staff member believes it is contaminated.</li>
+</ul>
+<figure id="data-map">
+<img src="../img/map.png" alt="sample sites" width="80%"/>
+<figcaption>Figure&nbsp;E.1: Survey sample sites.</figcaption>
+</figure>
+
+<h2>Usage</h2>
+<ol>
+<li>Create a fresh Python environment: <code>mamba create -y -n snailz python=3.12</code></li>
+<li>Activate that environment: <code>mamba activate snailz</code></li>
+<li>Install required packages: <code>pip install -r requirements.txt</code></li>
+<li>View available commands: <code>make</code> or <code>make commands</code></li>
+<li>Synthesize datasets: <code>make datasets</code></li>
+</ol>
+<h2>Database</h2>
+<p>The final database <code>data/lab.db</code> is structured as shown below.
+Note that the data from <code>assays.json</code> is split between several tables.</p>
+<figure id="data-schema">
+<img src="../img/db-schema.svg" alt="database schema"/>
+<figcaption>Figure&nbsp;E.2: Survey and experiment database schema.</figcaption>
+</figure>
+
+<ul>
+<li><code>site</code>: survey site<ul>
+<li><code>site_id</code>: primary key (text)</li>
+<li><code>lon</code>: longitude of site reference marker (float deg)</li>
+<li><code>lat</code>: latitude of site reference marker (float deg)</li>
+</ul>
+</li>
+<li><code>survey</code><ul>
+<li><code>survey_id</code>: primary key (text)</li>
+<li><code>site_id</code>: foreign key of site where survey was conducted (text)</li>
+<li><code>date</code>: date that survey was conducted (date, YYYY-MM-DD)</li>
+</ul>
+</li>
+<li><code>sample</code>: sample taken from survey<ul>
+<li><code>sample_id</code>: primary key (int, 1-1 with <code>experiment.sample_id</code>)</li>
+<li><code>survey_id</code>: foreign key of survey (int)</li>
+<li><code>lon</code>: longitude of sample site (float deg)</li>
+<li><code>lat</code>: latitude of sample site (float deg)</li>
+<li><code>sequence</code>: genome sequence of sample (text)</li>
+<li><code>size</code>: snail size (float)</li>
+</ul>
+</li>
+<li><code>experiment</code>: experiment done on sample<ul>
+<li><code>sample_id</code>: primary key (int, 1-1 with <code>sample.sample_id</code>)</li>
+<li><code>kind</code>: kind of experiment (text, either &lsquo;ELISA&rsquo; or &lsquo;JESS&rsquo;)</li>
+<li><code>start</code>: start date (date, YYYY-MM-DD)</li>
+<li><code>end</code>: end date (date, YYYY-MM-DD, null if experiment is ongoing)</li>
+</ul>
+</li>
+<li><code>staff</code><ul>
+<li><code>staff_id</code>: primary key (int)</li>
+<li><code>personal</code>: personal name (text)</li>
+<li><code>family</code>: family name (text)</li>
+</ul>
+</li>
+<li><code>performed</code>: join table showing which staff members performed which experiments<ul>
+<li><code>staff_id</code>: foreign key of staff member</li>
+<li><code>sample_id</code>: foreign key of sample/experiment</li>
+</ul>
+</li>
+<li><code>plate</code>: information about single assay plate<ul>
+<li><code>plate_id</code>: primary key (int)</li>
+<li><code>sample_id</code>: foreign key of sample/experiment (int)</li>
+<li><code>date</code>: date that plate was run (date, YYYY-MM-DD)</li>
+<li><code>filename</code>: filename of design/results file (text)</li>
+</ul>
+</li>
+<li><code>invalidated</code>: invalidated plates<ul>
+<li><code>plate_id</code>: foreign key of plate (int)</li>
+<li><code>staff_id</code>: foreign key of staff member who did invalidation (int)</li>
+<li><code>date</code>: when plate was invalidated</li>
+</ul>
+</li>
+</ul>
+<h2>Data Files</h2>
+<p><code>./data</code> contains all the generated data.</p>
+<ul>
+<li>Genomes: <code>genomes.json</code><ul>
+<li><code>length</code>: number of base pairs (int &gt; 0)</li>
+<li><code>reference</code>: the unmutated reference genome (text)</li>
+<li><code>individuals</code>: sequences for individuals (list of text)</li>
+<li><code>locations</code>: locations of mutations (list of int)</li>
+<li><code>susceptible_loc</code>: location of mutation of interest (int &gt;= 0)</li>
+<li><code>susceptible_base</code>: mutated base responsible for size change (char)</li>
+</ul>
+</li>
+<li>Grids: <code>grids/*.csv</code> (one file per site)<ul>
+<li>1/0: presence/absence of contamination at sample location</li>
+</ul>
+</li>
+<li>Samples: <code>grids/samples.csv</code><ul>
+<li><code>sample_id</code>: unique ID for genetic sample (text)</li>
+<li><code>survey_id</code>: which survey it was taken in (text)</li>
+<li><code>lon</code>: longitude of sample site (float)</li>
+<li><code>lat</code>: latitude of sample site (float)</li>
+<li><code>sequence</code>: sampled gene sequence (text)</li>
+<li><code>size</code>: snail weight (float, grams)</li>
+</ul>
+</li>
+<li>Assays: <code>assays.json</code><ul>
+<li><code>staff</code>:<ul>
+<li><code>staff_id</code>: unique staff member identifier (int &gt; 0)</li>
+<li><code>personal</code>: personal name (text)</li>
+<li><code>family</code>: family name (text)</li>
+</ul>
+</li>
+<li><code>experiment</code>: experiment details<ul>
+<li><code>sample_id</code>: sample that experiment used (int &gt; 0)</li>
+<li><code>kind</code>: &ldquo;ELISA&rdquo; or &ldquo;JESS&rdquo; (text)</li>
+<li><code>start</code>: start date (date, YYYY-MM-DD)</li>
+<li><code>end</code>: end date (date, YYYY-MM-DD or None if experiment incomplete)</li>
+</ul>
+</li>
+<li><code>performed</code>: join table showing who performed which experiments<ul>
+<li><code>staff_id</code>: foreign key to <code>staff</code></li>
+<li><code>sample_id</code>: foreign key to <code>experiment</code></li>
+</ul>
+</li>
+<li><code>plate</code>: details of assay plates used in experiments<ul>
+<li><code>plate_id</code>: unique plate identifier (int &gt; 0)</li>
+<li><code>sample_id</code>: foreign key to <code>sample</code> (text)</li>
+<li><code>date</code>: date plate was run (date, YYYY-MM-DD)</li>
+<li><code>filename</code>: name of design and results files (text)</li>
+</ul>
+</li>
+<li><code>invalidated</code>: which plates have been invalidated<ul>
+<li><code>plate_id</code>: foreign key to plate (text)</li>
+<li><code>staff_id</code>: foreign key to staff member responsible (text)</li>
+<li><code>date</code>: invalidation date (date, YYYY-MM-DD)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Plates are represented by matching files in the <code>designs</code> and <code>readings</code> directories<ul>
+<li><code>designs/*.csv</code>: assay plate designs<ul>
+<li>header: machine type, file type (&ldquo;design&rdquo; or &ldquo;readings&rdquo;), staff ID</li>
+<li>blank line</li>
+<li>table with column and row titles showing material in each well</li>
+</ul>
+</li>
+<li><code>readings/*.csv</code>: assay plate readings<ul>
+<li>header: machine type, file type (&ldquo;design&rdquo; or &ldquo;readings&rdquo;), staff ID</li>
+<li>blank line</li>
+<li>table with column and row titles showing reading from each well</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2>Workflow</h2>
+<p>The workflow used to generate the database and data files is shown below.
+Each step can be run from the Makefile:</p>
+<ul>
+<li><code>commands</code>: show available commands</li>
+<li><code>datasets</code>: make all datasets</li>
+<li><code>map</code>: generate SVG map of sample locations (in progress)</li>
+<li><code>db</code>: generate database</li>
+<li><code>plates</code>: generate plate files</li>
+<li><code>assays</code>: generate assay files</li>
+<li><code>samples</code>: sample snails from survey sites</li>
+<li><code>genomes</code>: synthesize genomes</li>
+<li><code>grids</code>: synthesize pollution grids</li>
+<li><code>lint</code>: check code</li>
+<li><code>clean</code>: remove all datasets</li>
+</ul>
+<figure id="data-workflow">
+<img src="../img/workflow.svg" alt="data generation workflow"/>
+<figcaption>Figure&nbsp;E.3: Synthetic data generation workflow.</figcaption>
+</figure>
+
+<h2>Parameters</h2>
+<p><code>./params</code> contains the parameter files used to control data generation.</p>
+<ul>
+<li>Sites: <code>sites.csv</code><ul>
+<li><code>site_id</code>: unique label for site (text)</li>
+<li><code>lon</code>: longitude of site reference marker (deg)</li>
+<li><code>lat</code>: latitude of site reference marker (deg)</li>
+</ul>
+</li>
+<li>Surveys: <code>surveys.csv</code><ul>
+<li><code>survey_id</code>: unique label for survey (text)</li>
+<li><code>site_id</code>: ID of site where survey was conducted (text)</li>
+<li><code>date</code>: date that survey was conducted (date, YYYY-MM-DD)</li>
+<li><code>spacing</code>: spacing of measurement point (float, meters)</li>
+</ul>
+</li>
+<li>Genomes: <code>genomes.json</code><ul>
+<li><code>length</code>: number of base pairs in sequences (int &gt; 0)</li>
+<li><code>num_genomes</code>: how many individuals to generate (int &gt; 0)</li>
+<li><code>num_snp</code>: number of single nucleotide polymorphisms (int &gt; 0)</li>
+<li><code>prob_other</code>: probability of non-significant mutations (float in 0..1)</li>
+<li><code>seed</code>: RNG seed (int &gt; 0)</li>
+<li><code>snp_probs</code>: probability of selecting various bases (list of 4 float summing to 1.0)</li>
+</ul>
+</li>
+<li>Grids: <code>grids.json</code><ul>
+<li><code>depth</code>: range of random values per cell (int &gt; 0)</li>
+<li><code>height</code>: number of cells on Y axis (int &gt; 0)</li>
+<li><code>seed</code>: RNG seed (int &gt; 0)</li>
+<li><code>width</code>: number of cells on X axis (int &gt; 0)</li>
+</ul>
+</li>
+<li>Assays: <code>assays.json</code><ul>
+<li><code>assay_duration</code>: range of days for each assay (ordered pair of int &gt;= 0)</li>
+<li><code>assay_plates</code>: range of plates per assay (ordered pair of int &gt;= 1)</li>
+<li><code>assay_staff</code>: range of staff in each assay (ordered pair of int &gt; 0)</li>
+<li><code>assay_types</code>: types of assays (list of text)</li>
+<li><code>control_val</code>: nominal reading value for control wells (float &gt; 0)</li>
+<li><code>controls</code>: labels to used for control wells (list of text)</li>
+<li><code>enddate</code>: end of all experiments</li>
+<li><code>filename_length</code>: length of stem of design/readings filenames (int &gt; 0)</li>
+<li><code>invalid</code>: probability of plate being invalidted (float in 0..1)</li>
+<li>`locale&rdquo;: locale to use when generating staff names (text)</li>
+<li><code>seed</code>: RNG seed (int &gt; 0)</li>
+<li><code>staff</code>: number of staff (int &gt; 0)</li>
+<li><code>startdate</code>: start of all experiments</li>
+<li><code>stdev</code>: standard deviation on readings (float &gt; 0)</li>
+<li><code>treated_val</code>: nominal reading value for treated well (float &gt; 0)</li>
+<li>`treatment&rdquo;: label to use for treated wells (text)</li>
+</ul>
+</li>
+</ul>
+	</main>
+	<footer>
+  © 2024 <a href="https://third-bit.com/">Greg Wilson</a>
+  &middot;
+  <a href="../">home</a>
+  &middot;
+  <a href="https://github.com/gvwilson/snailz">repository</a>
+  &middot;
+  <a href="../license/">license</a>
+</footer>
+
+      </div>
+    </div>
+  </body>
+</html>

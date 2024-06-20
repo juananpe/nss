@@ -38,7 +38,7 @@ appendices = [
     "license",
     "conduct",
     "contrib",
-    "data",
+    "datagen",
     "glossary",
     "colophon",
     "contents",
