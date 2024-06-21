@@ -26,6 +26,7 @@ chapters = [
     "clui",
     "server",
     "display",
+    "theme",
     "auth",
     "update",
     "a11y",
