@@ -73,8 +73,7 @@
 <li>FIXME</li>
 </ul>
 	  
-	  <p><span class="fixme">FIXME: write database chapter</span></p>
-<ul>
+	  <ul>
 <li>Start with a simple model<ul>
 <li><em>Staff</em> (people) conduct <em>experiments</em> alone or together over one or more days</li>
 <li>Each <em>experiment</em> uses one or more <em>plates</em> on a particular date</li>
@@ -93,26 +92,61 @@
 <li>We create models to represent the world, but then those models shape our view of the world</li>
 </ul>
 </li>
+<li>Example SQL queries<ul>
+<li><code>all_staff_alpha.sql</code>: get all staff names alphabetical by surname</li>
+<li><code>count_exp_by_staff.sql</code>: count experiments by staff ID</li>
+<li><code>most_recent_invalidaters.sql</code>: who invalidated plates in the most recent batch</li>
+</ul>
+</li>
 <li>We can use an ORM to translate classes to tables and rows to objects<ul>
-<li><a href="https://sqlmodel.tiangolo.com/">SQLModel</a> is a good one, but getting the plumbing right is hard</li>
+<li><a href="https://sqlmodel.tiangolo.com/">SQLModel</a> is a good one</li>
+<li><code>models.py</code>: just who performed which experiments</li>
+<li>But getting the plumbing right is hard<ul>
 <li>Not least because the error messages are difficult to understand</li>
 </ul>
 </li>
-<li>Take a human-scale approach instead<ul>
-<li>Each query is stored in its own <code>.sql</code> file (which allows us to run it directly for interactive testing)</li>
-<li>Load all of those queries into a dict at the start of the program</li>
-<li>Use a row factory to turn query result rows into dicts</li>
-<li>Figure out inserts and deletes later</li>
+<li>Does pay off when we need portability across databases</li>
 </ul>
 </li>
-<li>We are doing this backward<ul>
-<li>Should figure out what the interface needs to display and <em>then</em> come up with queries</li>
-<li>But we can build a few simple things to test our approach in minutes</li>
+<li>Take a human-scale approach instead<ul>
+<li>Each query is a string containing SQL<ul>
+<li>Always sort result so that we have a deterministic output to check in testing</li>
+</ul>
+</li>
+<li>Put all those strings in a module</li>
+<li>Use a row factory to turn query result rows into dicts</li>
+<li><code>run_queries.py</code>: use a bit of introspection to find queries</li>
 </ul>
 </li>
 <li>How do we test this?<ul>
 <li>Our synthesized dataset is too big to be easily understood, and might change</li>
 <li>Create a smaller fixture as an in-memory database</li>
+<li><code>test_queries.py</code>: create a database and fill it, then run tests<ul>
+<li>Have to worry about schema drift</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>What if we don&rsquo;t want everything?<ul>
+<li>Don&rsquo;t use Python string interpolation: SQL injection attacks</li>
+<li><code>test_parameters.py</code>: select one staff&rsquo;s experiments using a parameter</li>
+</ul>
+</li>
+<li>Deleting records<ul>
+<li>We need to cascade</li>
+<li>SQLite will do it for us (explore in the exercises)</li>
+<li>We&rsquo;ll do it manually<ul>
+<li>Unsafe: program could fail in the middle</li>
+<li>Should modify SQL used to create tables to cascade delete</li>
+</ul>
+</li>
+<li><code>test_delete.py</code> checks the number of rows deleted: should also check surviving rows are correct</li>
+</ul>
+</li>
+<li>We have done this backward<ul>
+<li>Should figure out what the interface needs to display and <em>then</em> come up with queries</li>
+<li>But building a few simple things lets us test our approach</li>
+<li>Good designers try to find flaws with their plans as early as possible <span class="bib-ref">[<a class="bib-ref" href="../bib/#Schon1984">Schon1984</a>]</span></li>
 </ul>
 </li>
 </ul>

@@ -91,4 +91,4 @@ data/grids/.touch: bin/grid.py params/grids.json params/sites.csv
 
 .PHONY: _clean
 _clean:
-	@rm -rf data
+	@rm -rf data/*

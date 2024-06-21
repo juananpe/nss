@@ -5,6 +5,7 @@ import util
 
 EXCLUSIONS = {
     "__pycache__",
+    ".pytest_cache",
 }
 
 
