@@ -9,11 +9,8 @@ syllabus:
 
 [%fixme "write display chapter" %]
 
--   Building a web UI is complex, so we split it into several lessons
-    -   Only interaction is selecting which read-only page to display next
-    -   Will implement login, forms, and file upload in future lessons
 -   [%x server %] gave us an API for fetching data as JSON
--   Turn that into HTML using [json2html][json2html]
+-   Turn that into HTML in the browser using [json2html][json2html] instead of rendering on the server ([%x template %])
     -   Would be easy to write our own utility, but why bother?
     -   The answer is, "Because now we have to audit that package for security"
 -   Each page displays data as a table
