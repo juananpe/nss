@@ -1,10 +1,10 @@
 -r lib/mccole/requirements.txt
 faker
-geopy
 kaleido
 pandas
 plotly
 polars
 pyarrow
 pytest
+snailz
 sqlmodel

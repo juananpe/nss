@@ -7,12 +7,28 @@ syllabus:
 -   FIXME
 ---
 
--   Start with a simple model
+-   Full model
+    -   One or more *surveys* are conducted at one or more *sites*.
+    -   Each survey collects *genomes* and *sizes* of snails.
+    -   A *grid* at each site is marked out to show the presence or absence of pollution.
+    -   *Laboratory staff* perform *assays* of the snails' genetic material.
+    -   Each assay plate has a *design* showing the material applied and *readings* showing the measured response.
+    -   Plates may be *invalidated* after the fact if a staff member believes it is contaminated.
+    -   [%f db-schema %]
+
+[%figure
+  slug="db-schema"
+  img="db-schema.svg"
+  caption="Database schema"
+  alt="Entity-relationship diagram of database schema"
+%]
+
+-   Start with a subset of that model
     -   *Staff* (people) conduct *experiments* alone or together over one or more days
     -   Each *experiment* uses one or more *plates* on a particular date
     -   A *plate* may be *invalidated* by a single *staff* on a particular date
 -   Relationships are as important as tables
-    -   staff to experiment: many to many (implemented as a *join table*)
+    -   staff to experiment: many to many (implemented as a [%g join_table "join table" %])
     -   experiment to plate: one to many
     -   invalidated to plate: zero or one to one
 -   Every model is a lie

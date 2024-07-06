@@ -26,8 +26,6 @@ CREATE TABLE performed (
 	sample_id BIGINT
 );
 '''
-
-
 STAFF = (
     (5, 'Al', 'Pha'),
     (7, 'Be', 'Ta'),

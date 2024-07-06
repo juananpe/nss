@@ -1,13 +1,10 @@
-# snailz
-
-A set of synthetic data generators for teaching data science
-that has somehow morphed into a lesson on human-scale computing.
+# Neighborhood-Scale Software
 
 I recently posted on Mastodon:
 
 > 1.  I'm going to write another tech book.
 > 2.  If I do, it will be about evidence-based software engineering and/or how big tech companies operate like drug cartels.
-> 3.  But I'm still thinking about "Human-Scale Software: A Guide for the 99.9% of Developers Who Don't Need Scalability"
+> 3.  But I'm still thinking about "Neighborhood-Scale Software: A Guide for the 99.9% of Developers Who Don't Need Scalability"
 
 So what would I use for #3?
 

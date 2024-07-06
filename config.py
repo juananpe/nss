@@ -1,6 +1,6 @@
 # Tutorial information
-slug = "snailz"
-title = "Human-Scale Software Development"
+slug = "nss"
+title = "Neighborhood-Scale Software"
 subtitle = "an introduction for the cautious and weary"
 repo = f"https://github.com/gvwilson/{slug}"
 author = {
@@ -21,18 +21,6 @@ timing = False
 chapters = [
     "intro",
     "db",
-    "perm",
-    "backup",
-    "clui",
-    "server",
-    "template",
-    "client",
-    "theme",
-    "auth",
-    "update",
-    "a11y",
-    "feed",
-    "mod",
     "finale",
 ]
 
@@ -42,7 +30,6 @@ appendices = [
     "license",
     "conduct",
     "contrib",
-    "datagen",
     "glossary",
     "colophon",
     "contents",

@@ -6,7 +6,7 @@
 <link rel="icon" href="../logo.svg">
 <link rel="stylesheet" href="../tango.css" type="text/css">
 <link rel="stylesheet" href="../mccole.css" type="text/css">
-<title>Human-Scale Software Development &middot; The Database</title>
+<title>Neighborhood-Scale Software &middot; The Database</title>
 <script>
   MathJax = {
     tex: {
@@ -37,12 +37,12 @@
   <a href="#printable">Skip to content</a>
 </div>
 
-<ol class="toc-chapters"><li><a href="../intro/">Introduction</a></li><li><a href="../db/">The Database</a></li><li><a href="../perm/">Permissions</a></li><li><a href="../backup/">Backup and Migration</a></li><li><a href="../clui/">The Command Line</a></li><li><a href="../server/">The Server</a></li><li><a href="../template/">Templates</a></li><li><a href="../client/">Displaying Data</a></li><li><a href="../theme/">Theming</a></li><li><a href="../auth/">Authentication</a></li><li><a href="../update/">Updating</a></li><li><a href="../a11y/">Accessibility</a></li><li><a href="../feed/">A News Feed</a></li><li><a href="../mod/">Moderation</a></li><li><a href="../finale/">Conclusion</a></li></ol>
-<ol class="toc-appendices"><li><a href="../bib/">Bibliography</a></li><li><a href="../license/">License</a></li><li><a href="../conduct/">Code of Conduct</a></li><li><a href="../contrib/">Contributing</a></li><li><a href="../datagen/">Data Sets</a></li><li><a href="../glossary/">Glossary</a></li><li><a href="../colophon/">Colophon</a></li><li><a href="../contents/">Index</a></li></ol>
+<ol class="toc-chapters"><li><a href="../intro/">Introduction</a></li><li><a href="../db/">The Database</a></li><li><a href="../finale/">Conclusion</a></li></ol>
+<ol class="toc-appendices"><li><a href="../bib/">Bibliography</a></li><li><a href="../license/">License</a></li><li><a href="../conduct/">Code of Conduct</a></li><li><a href="../contrib/">Contributing</a></li><li><a href="../glossary/">Glossary</a></li><li><a href="../colophon/">Colophon</a></li><li><a href="../contents/">Index</a></li></ol>
 
 
 
-<p><a href="https://github.com/gvwilson/snailz">GitHub repository</a></p>
+<p><a href="https://github.com/gvwilson/nss">GitHub repository</a></p>
 
       </div>
       <div id="printable" class="contents bordered">
@@ -64,7 +64,7 @@
     <a href="../" title="home" class="undecorated">&#9737;</a>
   </div>
   <div class="col-1 right">
-    <a href="../perm/" title="next" class="undecorated">&#8680;</a>
+    <a href="../finale/" title="next" class="undecorated">&#8680;</a>
   </div>
 </nav>
 
@@ -72,16 +72,35 @@
 	  <ul class="keypoints">
 <li>FIXME</li>
 </ul>
-	  
+	  <p class="terms">Terms defined: 
+<a class="gl-ref" href="../glossary/#join_table" markdown="1">join table</a>
+</p>
 	  <ul>
-<li>Start with a simple model<ul>
+<li>Full model<ul>
+<li>One or more <em>surveys</em> are conducted at one or more <em>sites</em>.</li>
+<li>Each survey collects <em>genomes</em> and <em>sizes</em> of snails.</li>
+<li>A <em>grid</em> at each site is marked out to show the presence or absence of pollution.</li>
+<li><em>Laboratory staff</em> perform <em>assays</em> of the snails&rsquo; genetic material.</li>
+<li>Each assay plate has a <em>design</em> showing the material applied and <em>readings</em> showing the measured response.</li>
+<li>Plates may be <em>invalidated</em> after the fact if a staff member believes it is contaminated.</li>
+<li><a class="fig-ref" href="../db/#db-schema">Figure&nbsp;2.1</a></li>
+</ul>
+</li>
+</ul>
+<figure id="db-schema">
+<img src="./db-schema.svg" alt="Entity-relationship diagram of database schema"/>
+<figcaption>Figure&nbsp;2.1: Database schema</figcaption>
+</figure>
+
+<ul>
+<li>Start with a subset of that model<ul>
 <li><em>Staff</em> (people) conduct <em>experiments</em> alone or together over one or more days</li>
 <li>Each <em>experiment</em> uses one or more <em>plates</em> on a particular date</li>
 <li>A <em>plate</em> may be <em>invalidated</em> by a single <em>staff</em> on a particular date</li>
 </ul>
 </li>
 <li>Relationships are as important as tables<ul>
-<li>staff to experiment: many to many (implemented as a <em>join table</em>)</li>
+<li>staff to experiment: many to many (implemented as a <a class="gl-ref" href="../glossary/#join_table" markdown="1">join table</a>)</li>
 <li>experiment to plate: one to many</li>
 <li>invalidated to plate: zero or one to one</li>
 </ul>
@@ -156,7 +175,7 @@
   &middot;
   <a href="../">home</a>
   &middot;
-  <a href="https://github.com/gvwilson/snailz">repository</a>
+  <a href="https://github.com/gvwilson/nss">repository</a>
   &middot;
   <a href="../license/">license</a>
 </footer>
