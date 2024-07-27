@@ -21,6 +21,7 @@ timing = False
 chapters = [
     "intro",
     "db",
+    "perm",
     "finale",
 ]
 
