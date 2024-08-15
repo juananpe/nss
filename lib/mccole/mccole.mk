@@ -13,6 +13,9 @@ MAKEINDEX=makeindex
 # Project root directory
 ROOT := .
 
+# Default port for serving, can be overridden by providing ARK_PORT in the environment
+ARK_PORT ?= 8080
+
 # Project theme
 THEME := $(shell python ${ROOT}/config.py)
 
@@ -67,7 +70,7 @@ build: ${TMP_BIB}
 ## serve: build site and run server
 .PHONY: serve
 serve: ${TMP_BIB}
-	ark watch
+	ark watch --port=${ARK_PORT}
 
 ## latex: regenerate LaTeX file
 latex: ${LATEX_PAGE}
